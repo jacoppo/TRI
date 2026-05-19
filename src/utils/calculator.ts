@@ -40,14 +40,47 @@ export interface RaceResult {
   totalDisplay: string;
 }
 
-export interface NutritionResult {
-  choMinPerDay: number;
-  choOptPerDay: number;
-  kcalMinPerDay: number;
-  kcalOptPerDay: number;
-  kcalExtraMin: number;
-  kcalExtraOpt: number;
+export interface NutritionDay {
+  choGrams: number;
+  choKcal: number;
+  extraKcal: number;
 }
+
+export interface NutritionResult {
+  distanceName: string;
+  day48h: NutritionDay;
+  day24h: NutritionDay;
+  note: string;
+}
+
+// Protocollo carb loading per distanza
+// Valori in g di CHO per kg di peso corporeo
+const NUTRITION_PROTOCOLS: Record<string, { name: string; cho48h: number; cho24h: number; note: string }> = {
+  sprint: {
+    name: 'Sprint',
+    cho48h: 5,
+    cho24h: 6,
+    note: 'Carico leggero: un buon pasto la sera prima è sufficiente. Privilegia pasta, riso o patate.',
+  },
+  olympic: {
+    name: 'Olimpico',
+    cho48h: 6,
+    cho24h: 8,
+    note: 'Carico moderato su 48h. Aumenta i carboidrati e riduci fibre e grassi il giorno prima.',
+  },
+  half: {
+    name: 'Medio 70.3',
+    cho48h: 8,
+    cho24h: 10,
+    note: 'Carico completo su 48h. Pasta, riso, pane bianco, banane. Riduci drasticamente fibre e grassi.',
+  },
+  full: {
+    name: 'Full Ironman',
+    cho48h: 10,
+    cho24h: 12,
+    note: 'Carico massimo su 48h. Carboidrati ad ogni pasto. Elimina fibre, grassi e alimenti nuovi.',
+  },
+};
 
 export interface AthleteLevel {
   overall: string;
@@ -236,22 +269,34 @@ function calcRunTime(data: AthleteData, runM: number, format: string): FractionR
 // ============================================================
 
 /**
- * Calculates pre-race carb loading recommendations (48h before race).
- * Protocol: 8g CHO/kg (minimum) to 12g CHO/kg (optimal) per day.
+ * Calculates pre-race carb loading recommendations split by 48h and 24h before the race.
+ * Protocols vary by triathlon distance: sprint uses lighter loading, full IM uses maximum loading.
+ *
+ * @param data - Athlete input data (weight, daily calories)
+ * @param distanceKey - Race distance ('sprint' | 'olympic' | 'half' | 'full')
  */
-export function calcNutrition(data: AthleteData): NutritionResult {
-  const choMinPerDay = Math.round(data.weightKg * 8);
-  const choOptPerDay = Math.round(data.weightKg * 12);
-  const kcalMinPerDay = choMinPerDay * 4;
-  const kcalOptPerDay = choOptPerDay * 4;
+export function calcNutrition(data: AthleteData, distanceKey: string = 'olympic'): NutritionResult {
+  const protocol = NUTRITION_PROTOCOLS[distanceKey] ?? NUTRITION_PROTOCOLS['olympic']!;
+
+  const cho48h = Math.round(data.weightKg * protocol.cho48h);
+  const cho24h = Math.round(data.weightKg * protocol.cho24h);
+
+  const kcal48h = cho48h * 4;
+  const kcal24h = cho24h * 4;
 
   return {
-    choMinPerDay,
-    choOptPerDay,
-    kcalMinPerDay,
-    kcalOptPerDay,
-    kcalExtraMin: Math.max(0, kcalMinPerDay - data.dailyCalories),
-    kcalExtraOpt: Math.max(0, kcalOptPerDay - data.dailyCalories),
+    distanceName: protocol.name,
+    day48h: {
+      choGrams: cho48h,
+      choKcal: kcal48h,
+      extraKcal: Math.max(0, kcal48h - data.dailyCalories),
+    },
+    day24h: {
+      choGrams: cho24h,
+      choKcal: kcal24h,
+      extraKcal: Math.max(0, kcal24h - data.dailyCalories),
+    },
+    note: protocol.note,
   };
 }
 

@@ -534,6 +534,110 @@ input::placeholder {
 }
 
 /* ============================================
+   NUTRITION ENHANCED
+   ============================================ */
+.nutrition-distance-selector {
+  margin-bottom: 1.25rem;
+}
+
+.nutrition-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nutrition-tab {
+  flex: 1;
+  min-width: 70px;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: center;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.nutrition-tab:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.nutrition-tab.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.nutrition-timeline {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0;
+  margin-bottom: 1rem;
+}
+
+.nutrition-divider {
+  width: 1px;
+  background: var(--color-border);
+  margin: 0 1rem;
+}
+
+.nutrition-day {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nutrition-day-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-bottom: 0.625rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.nutrition-day-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.nutrition-day-highlight .nutrition-day-label {
+  color: var(--color-primary);
+}
+
+.nutrition-day-sub {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+}
+
+.nutrition-day-values {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nutrition-item-extra .nutrition-item-value {
+  color: var(--color-primary);
+}
+
+@media (max-width: 500px) {
+  .nutrition-timeline {
+    grid-template-columns: 1fr;
+  }
+  .nutrition-divider {
+    width: 100%;
+    height: 1px;
+    margin: 1rem 0;
+  }
+}
+
+/* ============================================
    AD UNIT
    ============================================ */
 .ad-unit {
