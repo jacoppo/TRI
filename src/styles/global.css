@@ -534,6 +534,220 @@ input::placeholder {
 }
 
 /* ============================================
+   ROUTE INPUT CARD
+   ============================================ */
+.route-input-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.route-input-tab {
+  flex: 1;
+  padding: 0.45rem 0.75rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.route-input-tab.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+.route-tab-content {
+  margin-top: 0.25rem;
+}
+
+/* File input */
+.file-input-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  background: var(--color-surface-2);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  transition: border-color 0.15s, color 0.15s;
+  min-height: 56px;
+}
+
+.file-input-label:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.file-input-label svg {
+  flex-shrink: 0;
+}
+
+/* GPX stats */
+.gpx-stats {
+  background: rgba(56, 161, 105, 0.08);
+  border: 1px solid rgba(56, 161, 105, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.875rem;
+  margin-top: 0.75rem;
+}
+
+.gpx-stat-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.gpx-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 70px;
+}
+
+.gpx-stat strong {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--color-swim);
+}
+
+.gpx-stat em {
+  font-size: 0.7rem;
+  font-style: normal;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.gpx-name {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.gpx-error {
+  font-size: 0.8rem;
+  color: var(--color-primary);
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(229, 62, 62, 0.08);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(229, 62, 62, 0.2);
+}
+
+.btn-clear-route {
+  background: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.875rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 0.75rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-clear-route:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ============================================
+   ROUTE RESULT CARD
+   ============================================ */
+.route-result-card {
+  border-color: var(--color-bike);
+}
+
+.route-result-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.route-stat-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 80px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.625rem 0.875rem;
+}
+
+.route-stat-pill-label {
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.route-stat-pill-value {
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--color-text);
+}
+
+.route-result-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  margin-bottom: 1rem;
+}
+
+.route-result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem 0.875rem;
+  background: var(--color-surface-2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+}
+
+.route-result-label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.route-result-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--color-text);
+}
+
+.route-result-value.primary { color: var(--color-primary); font-size: 1.25rem; }
+.route-result-value.bike    { color: var(--color-bike); }
+
+.route-result-note {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  padding: 0.625rem;
+  background: rgba(214, 158, 46, 0.05);
+  border-left: 3px solid var(--color-bike);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* ============================================
    NUTRITION ENHANCED
    ============================================ */
 .nutrition-distance-selector {

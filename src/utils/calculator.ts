@@ -89,6 +89,14 @@ export interface AthleteLevel {
   swim: string;
 }
 
+export interface RouteData {
+  distanceM: number;
+  elevationGainM: number;
+  elevationLossM: number;
+  source: 'gpx' | 'manual';
+  name?: string;
+}
+
 // ============================================================
 // TRIATHLON DISTANCES
 // ============================================================
@@ -158,21 +166,22 @@ function calcSwimTime(data: AthleteData, swimM: number, format: string): Fractio
 
 /**
  * Solves for cycling speed (m/s) given power output using Newton-Raphson iteration.
- * Model: P = 0.5 * rho * CdA * v³ + Crr * totalMass * g * v
+ * Model: P = 0.5 * rho * CdA * v³ + (Crr + gradient) * totalMass * g * v
  *   - rho = 1.225 kg/m³ (air density)
  *   - CdA = 0.32 m² (aero triathlon position)
  *   - Crr = 0.004 (road rolling resistance)
  *   - totalMass = athleteKg + 8 (bike ~8kg)
+ *   - gradient = elevationGain / distance (dimensionless, accounts for climbing)
  */
-function solveForSpeedMs(watts: number, weightKg: number): number {
+function solveForSpeedMs(watts: number, weightKg: number, gradient: number = 0): number {
   const rho = 1.225;
   const CdA = 0.32;
   const Crr = 0.004;
   const g = 9.81;
   const mass = weightKg + 8;
 
-  const A = 0.5 * rho * CdA; // coefficient for v³
-  const B = Crr * mass * g;  // coefficient for v
+  const A = 0.5 * rho * CdA;
+  const B = (Crr + gradient) * mass * g; // gradient adds to rolling resistance
 
   let v = 9.0; // initial guess ~32 km/h in m/s
 
@@ -185,10 +194,47 @@ function solveForSpeedMs(watts: number, weightKg: number): number {
       v = vNew;
       break;
     }
-    v = Math.max(0.1, vNew); // prevent negative speed
+    v = Math.max(0.1, vNew);
   }
 
   return v;
+}
+
+/**
+ * Calculates estimated speed and time for a specific GPX/manual route,
+ * accounting for elevation gain via the aerodynamic model with gradient correction.
+ *
+ * @param data - Athlete data (weight, watts)
+ * @param route - Route data from GPX or manual input
+ */
+export function calcRouteResult(data: AthleteData, route: RouteData): FractionResult | null {
+  if (!route || route.distanceM <= 0) return null;
+
+  // Select watts appropriate for the route distance
+  let watts: number;
+  if (route.distanceM <= 30000) {
+    watts = data.bikeWatts20;
+  } else if (route.distanceM <= 120000) {
+    watts = data.bikeWatts90 ?? data.bikeWatts20 * 0.875;
+  } else {
+    watts = data.bikeWatts180 ?? (data.bikeWatts90 ?? data.bikeWatts20 * 0.875) * 0.88;
+  }
+
+  if (!watts || watts <= 0) return null;
+
+  // Effective gradient = total elevation gain / total distance
+  const effectiveGradient = route.elevationGainM / route.distanceM;
+
+  const speedMs = solveForSpeedMs(watts, data.weightKg, effectiveGradient);
+  const speedKmh = speedMs * 3.6;
+  const distanceKm = route.distanceM / 1000;
+  const estimatedSec = (distanceKm / speedKmh) * 3600;
+
+  return {
+    seconds: estimatedSec,
+    displayTime: formatSeconds(estimatedSec),
+    speedKmh,
+  };
 }
 
 /**
