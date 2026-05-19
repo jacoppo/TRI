@@ -1,0 +1,227 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const lastUpdated = '19 maggio 2025';
+---
+
+<Layout
+  title="Privacy Policy - TriCalculator"
+  description="Informativa sulla privacy di TriCalculator. Scopri come gestiamo i dati, i cookie e gli annunci pubblicitari."
+  canonicalUrl="https://tricalculator.app/privacy-policy"
+>
+  <div class="container">
+    <div class="privacy-content">
+      <h1>Privacy Policy</h1>
+      <p class="last-updated">Ultimo aggiornamento: {lastUpdated}</p>
+
+      <section>
+        <h2>1. Chi siamo</h2>
+        <p>
+          TriCalculator (<a href="https://tricalculator.app">tricalculator.app</a>) è un calcolatore gratuito
+          di tempi di gara nel triathlon. Per qualsiasi richiesta relativa alla privacy, contattaci a
+          <a href="mailto:privacy@tricalculator.app">privacy@tricalculator.app</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>2. Dati raccolti</h2>
+        <p>
+          <strong>TriCalculator non raccoglie né conserva dati personali.</strong>
+          Tutti i calcoli avvengono interamente nel tuo browser (client-side). I dati che inserisci
+          nel calcolatore (peso, tempi, watt) non vengono mai inviati a server esterni né memorizzati
+          in alcun database.
+        </p>
+        <p>
+          L'unico dato salvato localmente nel tuo browser è la tua scelta relativa ai cookie
+          (<code>cookie-consent</code> in localStorage), che viene usata esclusivamente per ricordare
+          la tua preferenza ed evitare di mostrare il banner ad ogni visita.
+        </p>
+      </section>
+
+      <section>
+        <h2>3. Cookie di terze parti — Google AdSense</h2>
+        <p>
+          TriCalculator utilizza <strong>Google AdSense</strong> per mostrare annunci pubblicitari.
+          Google AdSense può utilizzare cookie per personalizzare gli annunci in base ai tuoi interessi
+          e alle tue attività di navigazione. Questi cookie sono gestiti da Google LLC.
+        </p>
+        <p>
+          Se hai rifiutato il consenso tramite il nostro banner, gli annunci vengono mostrati in modalità
+          non personalizzata (non vengono usati cookie per la personalizzazione).
+        </p>
+        <p>
+          Per maggiori informazioni su come Google usa i dati per la pubblicità:
+          <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer">
+            policies.google.com/technologies/ads
+          </a>
+        </p>
+        <p>
+          Per disattivare la pubblicità personalizzata di Google:
+          <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">
+            adssettings.google.com
+          </a>
+        </p>
+      </section>
+
+      <section>
+        <h2>4. Cookie tecnici</h2>
+        <p>
+          Utilizziamo esclusivamente cookie tecnici strettamente necessari al funzionamento del sito:
+        </p>
+        <table class="privacy-table">
+          <thead>
+            <tr>
+              <th>Cookie</th>
+              <th>Tipo</th>
+              <th>Scopo</th>
+              <th>Durata</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>cookie-consent</code></td>
+              <td>localStorage</td>
+              <td>Ricorda la scelta dell'utente relativa ai cookie</td>
+              <td>Permanente (fino a cancellazione manuale)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section>
+        <h2>5. I tuoi diritti (GDPR)</h2>
+        <p>
+          In quanto residente nell'Unione Europea, hai i seguenti diritti ai sensi del Regolamento
+          UE 2016/679 (GDPR):
+        </p>
+        <ul>
+          <li><strong>Diritto di accesso:</strong> puoi richiedere informazioni sui dati che ti riguardano.</li>
+          <li><strong>Diritto alla cancellazione:</strong> puoi richiedere la cancellazione dei tuoi dati.</li>
+          <li><strong>Diritto di opposizione:</strong> puoi opporti al trattamento per finalità di marketing.</li>
+          <li><strong>Diritto alla portabilità:</strong> puoi richiedere i tuoi dati in formato leggibile.</li>
+          <li><strong>Diritto di revoca del consenso:</strong> puoi revocare il consenso ai cookie in qualsiasi momento svuotando il localStorage del tuo browser.</li>
+        </ul>
+        <p>
+          Per esercitare i tuoi diritti, contattaci a
+          <a href="mailto:privacy@tricalculator.app">privacy@tricalculator.app</a>.
+        </p>
+      </section>
+
+      <section>
+        <h2>6. Sicurezza</h2>
+        <p>
+          Non trasmettendo né conservando dati personali su server, il rischio di violazione dei dati
+          è minimizzato per design. Il sito è servito esclusivamente via HTTPS.
+        </p>
+      </section>
+
+      <section>
+        <h2>7. Modifiche a questa policy</h2>
+        <p>
+          Ci riserviamo il diritto di aggiornare questa policy. Le modifiche saranno indicate dalla
+          data di "Ultimo aggiornamento" in cima a questa pagina.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Contatti</h2>
+        <p>
+          Per qualsiasi domanda relativa a questa informativa:
+          <a href="mailto:privacy@tricalculator.app">privacy@tricalculator.app</a>
+        </p>
+      </section>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .privacy-content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+  }
+
+  .privacy-content h1 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 0.25rem;
+    color: var(--color-text);
+  }
+
+  .last-updated {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .privacy-content section {
+    margin-bottom: 2rem;
+  }
+
+  .privacy-content h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .privacy-content p {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: 0.75rem;
+  }
+
+  .privacy-content a {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .privacy-content ul {
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .privacy-content li {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.75;
+    margin-bottom: 0.25rem;
+  }
+
+  .privacy-content code {
+    background: var(--color-surface-2);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: var(--color-primary-light);
+  }
+
+  .privacy-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 0.75rem;
+  }
+
+  .privacy-table th {
+    background: var(--color-primary-dark);
+    color: white;
+    padding: 0.6rem 0.875rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .privacy-table td {
+    padding: 0.6rem 0.875rem;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+  }
+</style>

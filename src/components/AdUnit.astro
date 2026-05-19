@@ -1,0 +1,39 @@
+---
+interface Props {
+  slot?: 'leaderboard' | 'rectangle' | 'skyscraper';
+  label?: string;
+  class?: string;
+}
+
+const {
+  slot: adSlot = 'rectangle',
+  label = 'Pubblicità',
+  class: className = '',
+} = Astro.props;
+
+const isDev = import.meta.env.DEV;
+
+const adClass = {
+  leaderboard: 'ad-leaderboard',
+  rectangle: 'ad-rectangle',
+  skyscraper: 'ad-skyscraper',
+}[adSlot];
+---
+
+<div class={`ad-unit ${adClass} ${className}`}>
+  {isDev ? (
+    <div class="ad-unit-inner">{label}</div>
+  ) : (
+    <ins
+      class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-XXXXXXXXXX"
+      data-ad-slot="YYYYYYYYYY"
+      data-ad-format={adSlot === 'leaderboard' ? 'horizontal' : adSlot === 'skyscraper' ? 'vertical' : 'rectangle'}
+      data-full-width-responsive="true"
+    ></ins>
+    <script type="text/partytown">
+      (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  )}
+</div>

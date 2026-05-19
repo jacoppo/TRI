@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Calculator from '../components/Calculator.astro';
+import AdUnit from '../components/AdUnit.astro';
+---
+
+<Layout
+  title="TriCalculator - Calcola il tuo tempo di triathlon"
+  description="Calcola gratis il tuo tempo stimato per Sprint, Olimpico, 70.3 e Ironman in base a watt, tempi di corsa e nuoto. Strumento gratuito per triatleti."
+>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" is:inline>
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TriCalculator",
+    "url": "https://tricalculator.app",
+    "description": "Calcolatore tempi triathlon per Sprint, Olimpico, 70.3 e Ironman",
+    "applicationCategory": "SportsApplication",
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "inLanguage": "it"
+  }
+  </script>
+
+  <div class="container">
+
+    <!-- Leaderboard ad sotto l'header -->
+    <div style="margin: 1.5rem 0 0;">
+      <AdUnit slot="leaderboard" />
+    </div>
+
+    <!-- Calculator principale -->
+    <div style="margin-top: 1.5rem;">
+      <Calculator />
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+      <h2 class="faq-title">Domande Frequenti</h2>
+
+      <!-- FAQ JSON-LD -->
+      <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Come misuro i miei watt medi?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hai bisogno di un ciclocomputer con misuratore di potenza (powermeter). Per misurare i watt su 20km, esegui una prova a cronometro su un tratto pianeggiante e registra la potenza media. In alternativa, puoi fare un test FTP standard (20 minuti a tutta intensità: l'FTP è il 95% della potenza media). I watt su distanze più lunghe sono tipicamente l'85-90% dei tuoi watt su 20km."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Cosa sono le transizioni T1 e T2?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Le transizioni sono il tempo tra le frazioni di gara. T1 è il passaggio dal nuoto alla bici (togliersi la muta, mettere il casco, prendere la bici): tipicamente 2-5 minuti. T2 è il passaggio dalla bici alla corsa (lasciare la bici, togliere il casco, mettere le scarpe): tipicamente 1-3 minuti. TriCalculator include già i tempi di transizione standard nel totale."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Come si effettua il carb loading?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Il carb loading è un protocollo nutrizionale da seguire nelle 48 ore prima della gara. Aumenta l'assunzione di carboidrati a 8-12g per kg di peso corporeo al giorno. Privilegia pasta, riso, pane bianco, patate, banane e bevande sportive. Riduci fibre, grassi e proteine per facilitare la digestione. Evita cibi nuovi o che non conosci. Mantieniti ben idratato."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "I tempi calcolati sono accurati?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Le stime si basano sulla formula di Riegel (validata scientificamente per predire i tempi di gara) e su un modello aerodinamico standard per la bici. I tempi sono indicativi: non tengono conto di variabili esterne come pendenza del percorso, vento, temperatura dell'acqua e condizione fisica del giorno. Considera i valori come obiettivo di riferimento da verificare con le tue gare reali."
+            }
+          }
+        ]
+      }
+      </script>
+
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-question">
+            Come misuro i miei watt medi?
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">
+            Hai bisogno di un ciclocomputer con misuratore di potenza (powermeter). Per misurare i watt su 20km, esegui una prova a cronometro su un tratto pianeggiante e registra la potenza media. In alternativa, puoi fare un <strong>test FTP</strong>: 20 minuti a tutta intensità, l'FTP è il 95% della potenza media. I watt su distanze più lunghe sono tipicamente l'85-90% dei tuoi watt su 20km.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            Cosa sono le transizioni T1 e T2?
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">
+            Le transizioni sono il tempo tra le frazioni. <strong>T1</strong> va dal nuoto alla bici (togliersi la muta, casco, prendere la bici): tipicamente 2-5 minuti. <strong>T2</strong> va dalla bici alla corsa (lasciare la bici, togliere il casco, mettere le scarpe): tipicamente 1-3 minuti. TriCalculator include già i tempi standard di transizione nel totale calcolato.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            Come si effettua il carb loading?
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">
+            Nelle <strong>48 ore prima della gara</strong>, aumenta i carboidrati a 8-12g per kg di peso corporeo al giorno. Privilegia pasta, riso, pane bianco, patate, banane. Riduci fibre, grassi e proteine per facilitare la digestione. Evita cibi nuovi o che non hai mai provato. Mantieniti ben idratato. Il calcolatore ti fornisce il range personalizzato in base al tuo peso.
+          </p>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question">
+            I tempi calcolati sono accurati?
+            <svg class="faq-chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <p class="faq-answer">
+            Le stime si basano sulla <strong>formula di Riegel</strong> (validata scientificamente) e su un modello aerodinamico standard per la bici. I risultati sono indicativi: non tengono conto di pendenza del percorso, vento, temperatura dell'acqua o condizione fisica del giorno. Considera i valori come un obiettivo di riferimento da affinare con le tue gare reali.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Ad prima del footer -->
+    <div style="margin: 2rem 0;">
+      <AdUnit slot="leaderboard" />
+    </div>
+
+  </div>
+</Layout>

@@ -1,0 +1,128 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalUrl?: string;
+}
+
+const {
+  title = 'TriCalculator - Calcola il tuo tempo di triathlon',
+  description = 'Calcola gratis il tuo tempo stimato per Sprint, Olimpico, 70.3 e Ironman in base a watt, tempi di corsa e nuoto.',
+  canonicalUrl = Astro.url.href,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="TriCalculator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Google AdSense (via Partytown — non blocca il main thread) -->
+    <script
+      type="text/partytown"
+      async
+      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+      crossorigin="anonymous"
+    ></script>
+
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="/" class="logo">
+            <span class="tri">TRI</span><span class="calculator">CALCULATOR</span>
+          </a>
+          <span class="tagline">Calcola il tuo tempo di gara</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <span>© {new Date().getFullYear()} TriCalculator. Tutti i diritti riservati.</span>
+          <nav>
+            <a href="/privacy-policy">Privacy Policy</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Cookie Consent GDPR -->
+    <script>
+      // Mostra cookie banner se l'utente non ha ancora scelto
+      const consent = localStorage.getItem('cookie-consent');
+      if (!consent) {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'flex';
+      }
+
+      document.getElementById('btn-accept')?.addEventListener('click', () => {
+        localStorage.setItem('cookie-consent', 'accepted');
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      });
+
+      document.getElementById('btn-decline')?.addEventListener('click', () => {
+        localStorage.setItem('cookie-consent', 'rejected');
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      });
+    </script>
+
+    <!-- Cookie Banner HTML -->
+    <div
+      id="cookie-banner"
+      class="cookie-banner"
+      role="dialog"
+      aria-label="Consenso cookie"
+      style="display: none;"
+    >
+      <p class="cookie-text">
+        Questo sito usa cookie di terze parti per mostrare annunci personalizzati tramite Google AdSense.
+        <a href="/privacy-policy">Leggi la Privacy Policy</a>
+      </p>
+      <div class="cookie-actions">
+        <button id="btn-decline" class="btn-decline">Rifiuta</button>
+        <button id="btn-accept" class="btn-accept">Accetta</button>
+      </div>
+    </div>
+  </body>
+</html>

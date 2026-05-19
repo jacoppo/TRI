@@ -1,0 +1,398 @@
+---
+// Default values shown on first load (typical amateur triathlete)
+const defaults = {
+  weight: 72,
+  swim400: '7:30',
+  swim1500: '',
+  bikeWatts20: 200,
+  bikeWatts90: 175,
+  bikeWatts180: '',
+  run10k: '45:00',
+  runHalf: '',
+  dailyCalories: 2500,
+};
+---
+
+<div class="dashboard-grid" id="calculator">
+
+  <!-- ========================================
+       INPUT COLUMN
+       ======================================== -->
+  <div class="input-column">
+
+    <!-- Dati fisici -->
+    <div class="card">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Dati fisici
+      </h2>
+      <div class="form-group">
+        <label for="input-weight">
+          Peso corporeo <span class="unit">(kg)</span>
+          <span class="tooltip-icon" data-tip="Inserisci il tuo peso in kg senza equipaggiamento">?</span>
+        </label>
+        <input
+          type="number"
+          id="input-weight"
+          min="40" max="150" step="0.5"
+          value={defaults.weight}
+          placeholder="72"
+        />
+      </div>
+    </div>
+
+    <!-- Nuoto -->
+    <div class="card">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12c.6.5 1.2 1 2.5 1C7 13 7 11 9.5 11s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 17c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M22 7 12 2 2 7"/></svg>
+        Nuoto
+      </h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="input-swim400">
+            Tempo 400m
+            <span class="tooltip-icon" data-tip="Il tuo tempo su 400m in vasca (crawl). Esempio: 7:30">?</span>
+          </label>
+          <input type="text" id="input-swim400" placeholder="07:30" value={defaults.swim400} />
+        </div>
+        <div class="form-group">
+          <label for="input-swim1500">
+            Tempo 1.500m <span class="optional">(opz.)</span>
+            <span class="tooltip-icon" data-tip="Più preciso per distanze lunghe. Inserisci se disponibile. Esempio: 25:00">?</span>
+          </label>
+          <input type="text" id="input-swim1500" placeholder="25:00" value={defaults.swim1500} />
+        </div>
+      </div>
+    </div>
+
+    <!-- Bicicletta -->
+    <div class="card">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18.5" cy="17.5" r="3.5"/><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="15" cy="5" r="1"/><path d="M12 17.5V14l-3-3 4-3 2 3h2"/></svg>
+        Bicicletta
+      </h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="input-watts20">
+            Watt su 20km <span class="unit">(Sprint/Olimpico)</span>
+            <span class="tooltip-icon" data-tip="Watt medi che riesci a sostenere per 20km in gara. Misurabile con un ciclocomputer con powermeter.">?</span>
+          </label>
+          <input type="number" id="input-watts20" min="50" max="500" step="5" value={defaults.bikeWatts20} placeholder="200" />
+        </div>
+        <div class="form-group">
+          <label for="input-watts90">
+            Watt su 90km <span class="unit">(Medio)</span>
+            <span class="tooltip-icon" data-tip="Watt medi per 90km. Tipicamente 85-90% dei tuoi watt su 20km.">?</span>
+          </label>
+          <input type="number" id="input-watts90" min="50" max="450" step="5" value={defaults.bikeWatts90} placeholder="175" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="input-watts180">
+          Watt su 180km <span class="unit">(Full)</span> <span class="optional">(opz.)</span>
+          <span class="tooltip-icon" data-tip="Watt medi per 180km. Se non inserito, viene stimato automaticamente come 88% dei watt su 90km.">?</span>
+        </label>
+        <input type="number" id="input-watts180" min="50" max="400" step="5" value={defaults.bikeWatts180} placeholder="Calcolato automaticamente" />
+      </div>
+    </div>
+
+    <!-- Corsa -->
+    <div class="card">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4a1 1 0 1 0 2 0 1 1 0 0 0-2 0"/><path d="M7 21l3-6 2 2 2-3 4 4"/><path d="M5 12l2-5 3 2 2-4h4l1 3-3 2"/></svg>
+        Corsa
+      </h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="input-run10k">
+            Miglior 10km <span class="unit">(gara)</span>
+            <span class="tooltip-icon" data-tip="Il tuo miglior tempo sui 10km in una gara reale, non in allenamento. Esempio: 45:00">?</span>
+          </label>
+          <input type="text" id="input-run10k" placeholder="45:00" value={defaults.run10k} />
+        </div>
+        <div class="form-group">
+          <label for="input-runhalf">
+            Miglior mezza <span class="optional">(opz.)</span>
+            <span class="tooltip-icon" data-tip="Il tuo miglior tempo in mezza maratona (hh:mm:ss). Usato come riferimento per distanze lunghe. Esempio: 1:45:00">?</span>
+          </label>
+          <input type="text" id="input-runhalf" placeholder="1:45:00" value={defaults.runHalf} />
+        </div>
+      </div>
+    </div>
+
+    <!-- Nutrizione -->
+    <div class="card">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+        Nutrizione Pre-Gara
+      </h2>
+      <div class="form-group">
+        <label for="input-calories">
+          Calorie medie giornaliere <span class="unit">(kcal)</span>
+          <span class="tooltip-icon" data-tip="Le kcal che consumi mediamente in un giorno di allenamento normale. Usato per calcolare le calorie extra da assumere nelle 48h pre-gara.">?</span>
+        </label>
+        <input type="number" id="input-calories" min="1500" max="5000" step="50" value={defaults.dailyCalories} placeholder="2500" />
+      </div>
+    </div>
+
+    <button class="btn-reset" id="btn-reset" type="button">Ripristina valori di esempio</button>
+
+  </div><!-- end input-column -->
+
+  <!-- ========================================
+       OUTPUT COLUMN
+       ======================================== -->
+  <div class="output-column">
+
+    <!-- Athlete level -->
+    <div class="level-wrapper">
+      <span class="level-label">Livello atleta stimato:</span>
+      <span class="level-badge" id="athlete-level" data-level="">—</span>
+    </div>
+
+    <!-- Results table -->
+    <div class="card">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Tempi Stimati
+      </h2>
+      <div class="table-wrapper">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Formato</th>
+              <th style="color: var(--color-swim);">Nuoto</th>
+              <th>T1</th>
+              <th style="color: var(--color-bike);">Bici</th>
+              <th>T2</th>
+              <th style="color: var(--color-run);">Corsa</th>
+              <th>Totale</th>
+            </tr>
+          </thead>
+          <tbody>
+            {[
+              { key: 'sprint',  name: 'Sprint',     t1: '2:00', t2: '1:00' },
+              { key: 'olympic', name: 'Olimpico',   t1: '2:00', t2: '1:00' },
+              { key: 'half',    name: 'Medio 70.3', t1: '3:00', t2: '2:00' },
+              { key: 'full',    name: 'Full IM',    t1: '5:00', t2: '3:00' },
+            ].map((row) => (
+              <tr>
+                <td class="td-format">{row.name}</td>
+                <td class="td-time" id={`r-${row.key}-swim`}>—</td>
+                <td class="td-transition">{row.t1}</td>
+                <td class="td-time" id={`r-${row.key}-bike`}>—</td>
+                <td class="td-transition">{row.t2}</td>
+                <td class="td-time" id={`r-${row.key}-run`}>—</td>
+                <td class="td-total" id={`r-${row.key}-total`}>—</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Distance detail cards -->
+    <div class="distance-cards-grid">
+      {[
+        { key: 'sprint',  name: 'Sprint',     distances: '750m · 20km · 5km'       },
+        { key: 'olympic', name: 'Olimpico',   distances: '1.500m · 40km · 10km'    },
+        { key: 'half',    name: 'Medio 70.3', distances: '1.900m · 90km · 21,1km'  },
+        { key: 'full',    name: 'Full IM',    distances: '3.800m · 180km · 42,2km' },
+      ].map((d) => (
+        <div class="card distance-card">
+          <h3 class="card-title">
+            {d.name}
+            <span class="distance-label">{d.distances}</span>
+          </h3>
+          <div class="progress-bar" id={`pb-${d.key}`} title="Nuoto · Bici · Corsa">
+            <div class="progress-swim" id={`pb-${d.key}-swim`} style="width: 0%"></div>
+            <div class="progress-bike" id={`pb-${d.key}-bike`} style="width: 0%"></div>
+            <div class="progress-run"  id={`pb-${d.key}-run`}  style="width: 0%"></div>
+          </div>
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="stat-label">Nuoto</span>
+              <span class="stat-value swim" id={`s-${d.key}-swim`}>—</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Bici</span>
+              <span class="stat-value bike" id={`s-${d.key}-bike`}>—</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Corsa</span>
+              <span class="stat-value run" id={`s-${d.key}-run`}>—</span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Nutrition card -->
+    <div class="card mt-2">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M12 6v6l4 2"/></svg>
+        Carb Loading — 48h Pre-Gara
+      </h2>
+      <div class="nutrition-grid">
+        <div class="nutrition-item">
+          <div class="nutrition-item-label">CHO Minimo / giorno</div>
+          <div class="nutrition-item-value">
+            <span id="n-cho-min">—</span><span class="nutrition-item-unit">g</span>
+          </div>
+        </div>
+        <div class="nutrition-item">
+          <div class="nutrition-item-label">CHO Ottimale / giorno</div>
+          <div class="nutrition-item-value">
+            <span id="n-cho-opt">—</span><span class="nutrition-item-unit">g</span>
+          </div>
+        </div>
+        <div class="nutrition-item">
+          <div class="nutrition-item-label">Kcal Minimo / giorno</div>
+          <div class="nutrition-item-value">
+            <span id="n-kcal-min">—</span><span class="nutrition-item-unit">kcal</span>
+          </div>
+        </div>
+        <div class="nutrition-item">
+          <div class="nutrition-item-label">Kcal Ottimale / giorno</div>
+          <div class="nutrition-item-value">
+            <span id="n-kcal-opt">—</span><span class="nutrition-item-unit">kcal</span>
+          </div>
+        </div>
+      </div>
+      <div class="nutrition-note">
+        <strong>Protocollo carb loading:</strong> nelle 48h prima della gara aumenta i carboidrati a <span id="n-cho-range">—</span> g/giorno.
+        Riduci fibre, grassi e proteine. Privilegia pasta, riso, pane bianco, banane e bevande sportive.
+      </div>
+    </div>
+
+  </div><!-- end output-column -->
+</div><!-- end dashboard-grid -->
+
+<script>
+  import { calcAllDistances, calcNutrition, calcAthleteLevel } from '../utils/calculator';
+  import { parseTimeToSeconds, formatSpeed, formatPace, formatSwimPace } from '../utils/formatters';
+
+  // ── DOM helpers ──────────────────────────────────────────
+  function setText(id: string, value: string) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  function setWidth(id: string, pct: number) {
+    const el = document.getElementById(id) as HTMLElement | null;
+    if (el) el.style.width = `${Math.max(0, Math.min(100, pct))}%`;
+  }
+
+  // ── Read form data ────────────────────────────────────────
+  function getInputNum(id: string): number | null {
+    const el = document.getElementById(id) as HTMLInputElement | null;
+    if (!el || el.value.trim() === '') return null;
+    const v = parseFloat(el.value);
+    return isNaN(v) ? null : v;
+  }
+
+  function getInputTime(id: string): number | null {
+    const el = document.getElementById(id) as HTMLInputElement | null;
+    if (!el) return null;
+    return parseTimeToSeconds(el.value);
+  }
+
+  function parseFormData() {
+    const weight = getInputNum('input-weight') ?? 72;
+    return {
+      weightKg: weight,
+      swim400Time:  getInputTime('input-swim400') ?? undefined,
+      swim1500Time: getInputTime('input-swim1500') ?? undefined,
+      bikeWatts20:  getInputNum('input-watts20') ?? 0,
+      bikeWatts90:  getInputNum('input-watts90') ?? undefined,
+      bikeWatts180: getInputNum('input-watts180') ?? undefined,
+      run10kTime:   getInputTime('input-run10k') ?? undefined,
+      runHalfTime:  getInputTime('input-runhalf') ?? undefined,
+      dailyCalories: getInputNum('input-calories') ?? 2500,
+    };
+  }
+
+  // ── Update UI ─────────────────────────────────────────────
+  function updateUI() {
+    const data = parseFormData();
+    const results = calcAllDistances(data);
+    const nutrition = calcNutrition(data);
+    const level = calcAthleteLevel(data);
+
+    // Athlete level badge
+    const badge = document.getElementById('athlete-level');
+    if (badge) {
+      badge.textContent = level.overall;
+      badge.setAttribute('data-level', level.overall);
+    }
+
+    // Results table + distance cards
+    results.forEach((r) => {
+      const k = r.key;
+
+      // Table cells
+      setText(`r-${k}-swim`,  r.swim?.displayTime ?? '—');
+      setText(`r-${k}-bike`,  r.bike?.displayTime ?? '—');
+      setText(`r-${k}-run`,   r.run?.displayTime  ?? '—');
+      setText(`r-${k}-total`, r.totalDisplay);
+
+      // Progress bars
+      if (r.swim && r.bike && r.run && r.totalSec) {
+        const swimPct = (r.swim.seconds / r.totalSec) * 100;
+        const bikePct = (r.bike.seconds / r.totalSec) * 100;
+        const runPct  = (r.run.seconds  / r.totalSec) * 100;
+        setWidth(`pb-${k}-swim`, swimPct);
+        setWidth(`pb-${k}-bike`, bikePct);
+        setWidth(`pb-${k}-run`,  runPct);
+      } else {
+        setWidth(`pb-${k}-swim`, 0);
+        setWidth(`pb-${k}-bike`, 0);
+        setWidth(`pb-${k}-run`,  0);
+      }
+
+      // Stat values
+      setText(`s-${k}-swim`, r.swim?.paceSecPer100m ? formatSwimPace(r.swim.paceSecPer100m) : '—');
+      setText(`s-${k}-bike`, r.bike?.speedKmh       ? formatSpeed(r.bike.speedKmh)           : '—');
+      setText(`s-${k}-run`,  r.run?.paceSecPerKm    ? formatPace(r.run.paceSecPerKm)          : '—');
+    });
+
+    // Nutrition
+    setText('n-cho-min',  String(nutrition.choMinPerDay));
+    setText('n-cho-opt',  String(nutrition.choOptPerDay));
+    setText('n-kcal-min', String(nutrition.kcalMinPerDay));
+    setText('n-kcal-opt', String(nutrition.kcalOptPerDay));
+    setText('n-cho-range', `${nutrition.choMinPerDay}–${nutrition.choOptPerDay}`);
+  }
+
+  // ── Event listeners ───────────────────────────────────────
+  const inputIds = [
+    'input-weight', 'input-swim400', 'input-swim1500',
+    'input-watts20', 'input-watts90', 'input-watts180',
+    'input-run10k', 'input-runhalf', 'input-calories',
+  ];
+
+  inputIds.forEach((id) => {
+    document.getElementById(id)?.addEventListener('input', updateUI);
+  });
+
+  // Reset button
+  document.getElementById('btn-reset')?.addEventListener('click', () => {
+    const setVal = (id: string, v: string | number) => {
+      const el = document.getElementById(id) as HTMLInputElement | null;
+      if (el) el.value = String(v);
+    };
+    setVal('input-weight',   72);
+    setVal('input-swim400',  '7:30');
+    setVal('input-swim1500', '');
+    setVal('input-watts20',  200);
+    setVal('input-watts90',  175);
+    setVal('input-watts180', '');
+    setVal('input-run10k',   '45:00');
+    setVal('input-runhalf',  '');
+    setVal('input-calories', 2500);
+    updateUI();
+  });
+
+  // Initial calculation on page load
+  updateUI();
+</script>
