@@ -344,6 +344,14 @@ const defaults = {
         </div>
 
         <div class="share-feedback" id="share-feedback" style="display:none"></div>
+
+        <div class="share-card-section">
+          <button class="btn-generate-card" id="btn-generate-card" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+            Crea card per TikTok / Instagram
+          </button>
+          <span class="share-card-hint">Genera un'immagine 1080×1080 da scaricare e postare</span>
+        </div>
       </div>
     </div>
 
@@ -1472,6 +1480,118 @@ const defaults = {
     if (modal) modal.style.display = 'none';
     document.body.style.overflow = '';
   }
+
+  // ── Generate share card (Canvas PNG) ─────────────────────
+  function generateCard() {
+    const data = parseFormData();
+    const results = calcAllDistances(data).filter(r => r.totalSec !== null);
+    if (!results.length) { showFeedback('Inserisci almeno un tempo per generare la card.'); return; }
+
+    const size = 1080;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    const c = canvas.getContext('2d')!;
+
+    const bg      = '#0F0F0F';
+    const surface = '#1A1A1A';
+    const border  = '#2E2E2E';
+    const red     = '#E53E3E';
+    const textPri = '#F5F5F5';
+    const textSec = '#A0A0A0';
+    const swim    = '#38A169';
+    const bike    = '#D69E2E';
+    const run     = '#3182CE';
+
+    // Background
+    c.fillStyle = bg;
+    c.fillRect(0, 0, size, size);
+
+    // Top red bar
+    c.fillStyle = red;
+    c.fillRect(0, 0, size, 10);
+
+    // Logo
+    c.font = 'bold 58px Inter, system-ui, sans-serif';
+    c.fillStyle = red;
+    c.fillText('TRI', 80, 115);
+    const triW = c.measureText('TRI').width;
+    c.fillStyle = textPri;
+    c.fillText('CALCULATOR', 80 + triW, 115);
+
+    // Tagline
+    c.font = '500 26px Inter, system-ui, sans-serif';
+    c.fillStyle = textSec;
+    c.fillText('I MIEI TEMPI STIMATI DI GARA', 80, 162);
+
+    // Divider
+    c.fillStyle = border;
+    c.fillRect(80, 188, size - 160, 2);
+
+    // Results rows
+    const rowH = results.length <= 2 ? 200 : 170;
+    let y = 240;
+
+    results.forEach((r, i) => {
+      // Row bg alternating
+      if (i % 2 === 0) {
+        c.fillStyle = surface;
+        const pad = 60;
+        c.beginPath();
+        const rr = 12;
+        c.roundRect(pad, y - 28, size - pad * 2, rowH - 16, rr);
+        c.fill();
+      }
+
+      // Distance name
+      c.font = 'bold 40px Inter, system-ui, sans-serif';
+      c.fillStyle = textPri;
+      c.fillText(r.name, 100, y + 14);
+
+      // Swim / Bike / Run labels + times
+      const labelY = y + 62;
+      c.font = '500 28px Inter, system-ui, sans-serif';
+
+      c.fillStyle = swim;
+      c.fillText('Nuoto  ' + (r.swim?.displayTime ?? '—'), 100, labelY);
+
+      c.fillStyle = bike;
+      c.fillText('Bici  ' + (r.bike?.displayTime ?? '—'), 380, labelY);
+
+      c.fillStyle = run;
+      c.fillText('Corsa  ' + (r.run?.displayTime ?? '—'), 660, labelY);
+
+      // Total (right-aligned, large)
+      c.font = 'bold 46px Inter, system-ui, sans-serif';
+      c.fillStyle = red;
+      const totalW = c.measureText(r.totalDisplay).width;
+      c.fillText(r.totalDisplay, size - 100 - totalW, y + 14);
+
+      y += rowH;
+    });
+
+    // Bottom divider
+    c.fillStyle = border;
+    c.fillRect(80, size - 100, size - 160, 2);
+
+    // URL
+    c.font = '500 30px Inter, system-ui, sans-serif';
+    c.fillStyle = textSec;
+    c.fillText('tricalculator.app', 80, size - 50);
+
+    // Bottom red bar
+    c.fillStyle = red;
+    c.fillRect(0, size - 10, size, 10);
+
+    // Download
+    const link = document.createElement('a');
+    link.download = 'tricalculator-tempi.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    showFeedback('✓ Card scaricata! Postala su TikTok o Instagram.');
+  }
+
+  document.getElementById('btn-generate-card')?.addEventListener('click', generateCard);
 
   document.getElementById('btn-share')?.addEventListener('click', openModal);
   document.getElementById('share-modal-close')?.addEventListener('click', closeModal);
