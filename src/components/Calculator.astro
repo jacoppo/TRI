@@ -459,6 +459,33 @@ const defaults = {
       </div>
     </div>
 
+    <!-- Taper card -->
+    <div class="card mt-2">
+      <h2 class="card-title">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Piano Taper Pre-Gara
+      </h2>
+
+      <div class="taper-tabs">
+        {[
+          { key: 'sprint',  label: 'Sprint'  },
+          { key: 'olympic', label: 'Olimpico'},
+          { key: 'half',    label: '70.3'    },
+          { key: 'full',    label: 'Full IM' },
+        ].map((d) => (
+          <button
+            class={`taper-tab ${d.key === 'olympic' ? 'active' : ''}`}
+            data-taper-distance={d.key}
+            type="button"
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+
+      <div id="taper-content"></div>
+    </div>
+
     <!-- Coaching button + section -->
     <div class="mt-2">
       <button class="btn-coaching" id="btn-coaching" type="button">
@@ -926,6 +953,234 @@ const defaults = {
       updateUI();
     });
   });
+
+  // ── Taper plan ────────────────────────────────────────────
+  const TAPER_DATA: Record<string, {
+    name: string;
+    duration: string;
+    overview: string;
+    phases: { label: string; reduction: string; tips: string[] }[];
+    raceMorning: string[];
+  }> = {
+    sprint: {
+      name: 'Sprint',
+      duration: '7 giorni',
+      overview: 'Per lo Sprint un taper breve è sufficiente: 7 giorni di riduzione progressiva senza perdere la reattività.',
+      phases: [
+        {
+          label: '7–4 giorni prima',
+          reduction: '-30%',
+          tips: [
+            'Riduci il volume totale del 30% rispetto alla tua settimana tipo.',
+            'Bici: 1 uscita con 2×8min a ritmo gara, resto in Z2.',
+            'Corsa: 1 sessione con 6×400m veloci + 15min Z2.',
+            'Nuoto: 1.500m con 4×100m a ritmo gara.',
+          ],
+        },
+        {
+          label: '3–1 giorni prima',
+          reduction: '-60%',
+          tips: [
+            '3 giorni: 30min bici facile + 15min corsa leggera.',
+            '2 giorni: riposo completo o 800m nuoto molto facile.',
+            '1 giorno: riposo. Max 10min camminata, stretching.',
+          ],
+        },
+      ],
+      raceMorning: [
+        'Sveglia 2.5–3h prima del via.',
+        'Colazione: 400–500 kcal (riso/avena + banana + caffè se abituato).',
+        'Riscaldamento: 15min corsa facile + 10min nuoto.',
+        'Ultimo gel o maltodestrina 15min prima del via.',
+      ],
+    },
+    olympic: {
+      name: 'Olimpico',
+      duration: '10–14 giorni',
+      overview: 'Due settimane di taper progressivo. La prima mantiene la qualità, la seconda riduce drasticamente il volume.',
+      phases: [
+        {
+          label: '14–8 giorni prima',
+          reduction: '-30–35%',
+          tips: [
+            'Riduci il volume del 30-35% ma mantieni l\'intensità: 2 sessioni di qualità a settimana.',
+            'Bici: long ride ridotta del 30% + 1 sessione sweet spot (2×12min @90% FTP).',
+            'Corsa: long run ridotta + 1 sessione con 3×1km a ritmo 10km.',
+            'Nuoto: 2 sessioni con tratti a ritmo gara.',
+          ],
+        },
+        {
+          label: '7–4 giorni prima',
+          reduction: '-50%',
+          tips: [
+            'Volume dimezzato. Ogni sessione è breve e specifica.',
+            'Bici: 45min facile con 3×5min a ritmo gara.',
+            'Corsa: 30min con 4×400m veloci.',
+            'Nuoto: 1.200m con 6×50m a ritmo gara.',
+          ],
+        },
+        {
+          label: '3–1 giorni prima',
+          reduction: '-70%',
+          tips: [
+            '3 giorni: 25min bici + 15min corsa, tutto molto facile.',
+            '2 giorni: riposo o 600m nuoto leggero.',
+            '1 giorno: riposo completo.',
+          ],
+        },
+      ],
+      raceMorning: [
+        'Sveglia 2.5–3h prima del via.',
+        'Colazione: 600–700 kcal (pasta/riso freddo, banana, caffè).',
+        'Riscaldamento: 20min corsa + 10min nuoto con 4×25m veloci.',
+        'Idratati bene la sera prima: 500ml extra di acqua o isotonica.',
+        'Gel 15min prima del via.',
+      ],
+    },
+    half: {
+      name: 'Medio 70.3',
+      duration: '2 settimane',
+      overview: 'Taper di 14 giorni con riduzione graduale. La settimana di gara è quella critica: proteggi le gambe.',
+      phases: [
+        {
+          label: '3a settimana prima (–14 giorni)',
+          reduction: 'Normale o -10%',
+          tips: [
+            'Ultima settimana di carico completo. Esegui tutti i tuoi allenamenti chiave.',
+            'Long ride finale: 3-3.5h con ultimi 30min a ritmo 70.3.',
+            'Long run finale: 1.5-2h in Z2.',
+            'Poi comincia a ridurre — questa è l\'ultima settimana ad alto volume.',
+          ],
+        },
+        {
+          label: '2a settimana prima (–7 giorni)',
+          reduction: '-40%',
+          tips: [
+            'Bici: 2 sessioni max. Una con 2×15min @90% FTP (sweet spot), una di 60-75min facile.',
+            'Corsa: long run ridotta a 75-90min + 1 sessione con 3×2km a ritmo gara.',
+            'Nuoto: 2 sessioni, 1 con 5×200m a ritmo gara.',
+            'Brick: 45min bici + 20min corsa a ritmo gara — ultima sessione specifica.',
+          ],
+        },
+        {
+          label: 'Settimana di gara (–6 a –1 giorni)',
+          reduction: '-60%',
+          tips: [
+            '6 giorni: 45min bici facile + 20min corsa leggera.',
+            '5 giorni: nuoto 1.500m con 4×100m a ritmo gara.',
+            '4 giorni: 30min bici con 2×5min a ritmo gara, poi 15min corsa facile.',
+            '3 giorni: 20min corsa molto facile o riposo.',
+            '2 giorni: riposo completo o 800m nuoto leggero.',
+            '1 giorno: riposo. Al massimo una camminata e un giro veloce sul percorso.',
+          ],
+        },
+      ],
+      raceMorning: [
+        'Sveglia 3h prima del via.',
+        'Colazione: 700–800 kcal (riso, pane bianco, banana, caffè). Evita fibre.',
+        'Riscaldamento: 15min corsa facile + 10min nuoto con qualche braccita veloce.',
+        'Idratazione: 500ml isotonica fino a 45min prima del via, poi solo sorsetti.',
+        'Gel ogni 30-40min in gara. Pratica la strategia già testata in allenamento.',
+      ],
+    },
+    full: {
+      name: 'Full Ironman',
+      duration: '3 settimane',
+      overview: 'Tre settimane di taper progressivo. L\'errore più comune è ridurre troppo l\'intensità: mantienila, riduci il volume.',
+      phases: [
+        {
+          label: '3a settimana prima (–21 giorni)',
+          reduction: '-20%',
+          tips: [
+            'Riduci solo il 20%: la sovracompensazione inizia qui.',
+            'Ultima long ride da 4-5h (non di più — è tardi per adattamenti).',
+            'Ultimo long run da 2-2.5h. Dopo questo, niente corsa lunga.',
+            'Mantieni 1 sessione di qualità bici (sweet spot 2×20min) e 1 corsa con intervalli.',
+          ],
+        },
+        {
+          label: '2a settimana prima (–14 giorni)',
+          reduction: '-40%',
+          tips: [
+            'Volume dimezzato rispetto al picco. Le gambe devono sentirsi pesanti nei primi giorni — è normale.',
+            'Bici: max 2.5h totali. 1 sessione con 3×10min @FTP.',
+            'Corsa: max 60min totali. 1 sessione con 2×2km a ritmo IM.',
+            'Nuoto: 2 sessioni da 2.500-3.000m totali.',
+            'Brick: 60min bici + 15min corsa — ultima sessione brick.',
+          ],
+        },
+        {
+          label: 'Settimana di gara (–6 a –1 giorni)',
+          reduction: '-65%',
+          tips: [
+            '6 giorni: 45min bici facile + 15min corsa leggera.',
+            '5 giorni: nuoto 2.000m con 4×200m a ritmo gara.',
+            '4 giorni: 30min bici con 3×5min @FTP, poi 10min corsa.',
+            '3 giorni: riposo o 20min camminata.',
+            '2 giorni: riposo completo. Registra la bici, controlla l\'equipaggiamento.',
+            '1 giorno: 10-15min jogging leggero + 5min nuoto. Nient\'altro.',
+          ],
+        },
+      ],
+      raceMorning: [
+        'Sveglia 3.5–4h prima del via.',
+        'Colazione: 800–1.000 kcal (riso, banana, pane bianco, caffè). Evita grassi e fibre.',
+        'Idratazione: 750ml acqua/isotonica entro 2h dal via, poi stop per evitare il bisogno di urinare.',
+        'Riscaldamento minimale: 10min camminata, stretching dinamico, 5min nuoto.',
+        'Strategia nutrizionale: gel ogni 25-30min bici (60-90g CHO/h), corsa ogni 20-25min.',
+        'Testa la marca di gel PRIMA in allenamento — mai niente di nuovo in gara.',
+      ],
+    },
+  };
+
+  let selectedTaperDistance = 'olympic';
+
+  function renderTaper(key: string) {
+    const plan = TAPER_DATA[key];
+    if (!plan) return;
+    const content = document.getElementById('taper-content');
+    if (!content) return;
+
+    const phasesHtml = plan.phases.map((phase, i) => `
+      <div class="taper-phase">
+        <div class="taper-phase-header">
+          <span class="taper-phase-dot taper-dot-${i + 1}"></span>
+          <span class="taper-phase-label">${phase.label}</span>
+          <span class="taper-phase-badge">Volume ${phase.reduction}</span>
+        </div>
+        <ul class="taper-tips">
+          ${phase.tips.map(t => `<li>${t}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+
+    const morningHtml = plan.raceMorning.map(t => `<li>${t}</li>`).join('');
+
+    content.innerHTML = `
+      <div class="taper-overview">${plan.overview}</div>
+      <div class="taper-duration-badge">Durata taper: <strong>${plan.duration}</strong></div>
+      <div class="taper-phases">${phasesHtml}</div>
+      <div class="taper-race-morning">
+        <div class="taper-morning-header">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+          Mattina di gara
+        </div>
+        <ul class="taper-tips">${morningHtml}</ul>
+      </div>
+    `;
+  }
+
+  document.querySelectorAll('.taper-tab').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.taper-tab').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedTaperDistance = (btn as HTMLElement).dataset['taperDistance'] ?? 'olympic';
+      renderTaper(selectedTaperDistance);
+    });
+  });
+
+  // Initial render
+  renderTaper(selectedTaperDistance);
 
   // ── Coaching section ──────────────────────────────────────
   function fillDisciplinePanel(key: 'swim' | 'bike' | 'run', advice: DisciplineAdvice | null) {
