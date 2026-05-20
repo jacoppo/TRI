@@ -263,6 +263,14 @@ const defaults = {
       </div>
     </div>
 
+    <!-- Share button -->
+    <div class="share-row">
+      <button class="btn-share" id="btn-share" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Condividi i tuoi tempi
+      </button>
+    </div>
+
     <!-- Distance detail cards -->
     <div class="distance-cards-grid">
       {[
@@ -1279,6 +1287,32 @@ const defaults = {
       const panel = document.getElementById(`cpanel-${tab}`);
       if (panel) panel.style.display = 'block';
     });
+  });
+
+  // ── Share results ─────────────────────────────────────────
+  document.getElementById('btn-share')?.addEventListener('click', () => {
+    const data = parseFormData();
+    const results = calcAllDistances(data);
+    const lines = results
+      .filter(r => r.totalSec !== null)
+      .map(r => `${r.name}: 🏊 ${r.swim?.displayTime ?? '—'} | 🚴 ${r.bike?.displayTime ?? '—'} | 🏃 ${r.run?.displayTime ?? '—'} → ${r.totalDisplay}`)
+      .join('\n');
+
+    if (!lines) return;
+
+    const text = `I miei tempi stimati al triathlon:\n\n${lines}\n\nCalcolato con TriCalculator → tricalculator.app`;
+    const btn = document.getElementById('btn-share')!;
+
+    if (navigator.share) {
+      navigator.share({ text }).catch(() => {});
+    } else {
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = '✓ Copiato negli appunti!';
+        setTimeout(() => {
+          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Condividi i tuoi tempi`;
+        }, 2500);
+      }).catch(() => {});
+    }
   });
 
   // ── Zones tabs ────────────────────────────────────────────

@@ -1,0 +1,659 @@
+---
+import Layout from '../layouts/Layout.astro';
+import AdUnit from '../components/AdUnit.astro';
+---
+
+<Layout
+  title="Guida al Triathlon — Distanze, Preparazione e Consigli | TriCalculator"
+  description="Guida completa al triathlon: Sprint, Olimpico, 70.3 e Ironman. Distanze, attrezzatura, preparazione, nutrizione e consigli per principianti e amatori."
+  canonicalUrl="https://tricalculator.app/guida"
+>
+
+  <div class="container">
+
+    <div class="guide-header">
+      <h1 class="guide-title">Guida Completa al Triathlon</h1>
+      <p class="guide-subtitle">
+        Tutto quello che devi sapere su distanze, allenamento, attrezzatura e nutrizione
+        per il tuo primo (o prossimo) triathlon.
+      </p>
+      <a href="/" class="guide-cta">Calcola i tuoi tempi di gara →</a>
+    </div>
+
+    <div style="margin: 1.5rem 0;">
+      <AdUnit slot="leaderboard" slotId="8950680520" />
+    </div>
+
+    <div class="guide-grid">
+
+      <!-- Indice -->
+      <nav class="guide-toc">
+        <div class="guide-toc-title">Indice</div>
+        <ul class="guide-toc-list">
+          <li><a href="#distanze">Le 4 distanze del triathlon</a></li>
+          <li><a href="#attrezzatura">Attrezzatura essenziale</a></li>
+          <li><a href="#preparazione">Come prepararsi</a></li>
+          <li><a href="#transizioni">Le transizioni T1 e T2</a></li>
+          <li><a href="#nutrizione">Nutrizione in gara</a></li>
+          <li><a href="#taper">Il taper pre-gara</a></li>
+          <li><a href="#consigli">Consigli per il primo triathlon</a></li>
+        </ul>
+      </nav>
+
+      <!-- Contenuto principale -->
+      <div class="guide-content">
+
+        <!-- Distanze -->
+        <section id="distanze" class="guide-section">
+          <h2>Le 4 distanze del triathlon</h2>
+          <p>
+            Il triathlon si declina in quattro distanze ufficiali. Scegliere quella giusta
+            è il primo passo per pianificare l'allenamento e avere aspettative realistiche.
+          </p>
+
+          <div class="distance-cards-guide">
+
+            <div class="dist-card">
+              <div class="dist-card-header sprint">Sprint</div>
+              <div class="dist-card-body">
+                <div class="dist-row"><span>Nuoto</span><strong>750 m</strong></div>
+                <div class="dist-row"><span>Bici</span><strong>20 km</strong></div>
+                <div class="dist-row"><span>Corsa</span><strong>5 km</strong></div>
+                <div class="dist-row total"><span>Tempo medio amatori</span><strong>~1h 10min</strong></div>
+              </div>
+              <p class="dist-desc">
+                La distanza ideale per il primo triathlon. Richiede 8-12 settimane di preparazione
+                con una base sportiva. Puoi finirla anche senza essere un atleta esperto.
+              </p>
+            </div>
+
+            <div class="dist-card">
+              <div class="dist-card-header olympic">Olimpico</div>
+              <div class="dist-card-body">
+                <div class="dist-row"><span>Nuoto</span><strong>1.500 m</strong></div>
+                <div class="dist-row"><span>Bici</span><strong>40 km</strong></div>
+                <div class="dist-row"><span>Corsa</span><strong>10 km</strong></div>
+                <div class="dist-row total"><span>Tempo medio amatori</span><strong>~2h 30min</strong></div>
+              </div>
+              <p class="dist-desc">
+                La distanza più diffusa e quella usata alle Olimpiadi. Richiede 4-6 mesi di
+                preparazione dedicata. È il benchmark ideale per misurare i propri progressi.
+              </p>
+            </div>
+
+            <div class="dist-card">
+              <div class="dist-card-header half">Medio 70.3</div>
+              <div class="dist-card-body">
+                <div class="dist-row"><span>Nuoto</span><strong>1.900 m</strong></div>
+                <div class="dist-row"><span>Bici</span><strong>90 km</strong></div>
+                <div class="dist-row"><span>Corsa</span><strong>21,1 km</strong></div>
+                <div class="dist-row total"><span>Tempo medio amatori</span><strong>~5h 30min</strong></div>
+              </div>
+              <p class="dist-desc">
+                Il "mezzo Ironman". Richiede almeno 6-9 mesi di preparazione strutturata.
+                La nutrizione in gara diventa fondamentale: non si può correre a vuoto per 5+ ore.
+              </p>
+            </div>
+
+            <div class="dist-card">
+              <div class="dist-card-header full">Full Ironman</div>
+              <div class="dist-card-body">
+                <div class="dist-row"><span>Nuoto</span><strong>3.800 m</strong></div>
+                <div class="dist-row"><span>Bici</span><strong>180 km</strong></div>
+                <div class="dist-row"><span>Corsa</span><strong>42,2 km</strong></div>
+                <div class="dist-row total"><span>Tempo medio amatori</span><strong>~12h</strong></div>
+              </div>
+              <p class="dist-desc">
+                La sfida definitiva. Richiede 9-12 mesi di preparazione con 10-15 ore di
+                allenamento settimanale. Finire un Ironman cambia la prospettiva sulla resistenza umana.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Attrezzatura -->
+        <section id="attrezzatura" class="guide-section">
+          <h2>Attrezzatura essenziale</h2>
+          <p>Non serve spendere una fortuna per finire il primo triathlon. Ecco l'essenziale per disciplina.</p>
+
+          <div class="equip-grid">
+            <div class="equip-block">
+              <h3 class="equip-title swim-color">Nuoto</h3>
+              <ul class="equip-list">
+                <li><strong>Costume / trisuit</strong> — il trisuit si indossa per tutta la gara</li>
+                <li><strong>Cuffia</strong> — spesso fornita dall'organizzazione</li>
+                <li><strong>Occhialini</strong> — fondamentali per l'orientamento in acque aperte</li>
+                <li><strong>Muta in neoprene</strong> — obbligatoria sotto 16°C, consigliata fino a 24°C</li>
+              </ul>
+            </div>
+            <div class="equip-block">
+              <h3 class="equip-title bike-color">Bicicletta</h3>
+              <ul class="equip-list">
+                <li><strong>Bici da strada o da triathlon</strong> — qualsiasi bici va bene per iniziare</li>
+                <li><strong>Casco omologato</strong> — obbligatorio per legge</li>
+                <li><strong>Scarpe da ciclismo</strong> — con tacchette per maggiore efficienza</li>
+                <li><strong>Ciclocomputer</strong> — per monitorare velocità e, idealmente, i watt</li>
+                <li><strong>Borracce e portaborraccia</strong> — almeno 2 per gare lunghe</li>
+              </ul>
+            </div>
+            <div class="equip-block">
+              <h3 class="equip-title run-color">Corsa</h3>
+              <ul class="equip-list">
+                <li><strong>Scarpe da corsa</strong> — già rodate, mai nuove il giorno di gara</li>
+                <li><strong>Lacci elastici</strong> — per la transizione T2 più rapida</li>
+                <li><strong>Cinturino porta-pettorale</strong> — evita di appuntarlo sul trisuit</li>
+                <li><strong>Cappellino o visiera</strong> — per sole e pioggia</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <div style="margin: 2rem 0;">
+          <AdUnit slot="rectangle" slotId="8398804734" />
+        </div>
+
+        <!-- Preparazione -->
+        <section id="preparazione" class="guide-section">
+          <h2>Come prepararsi per un triathlon</h2>
+          <p>
+            Il triathlon richiede di allenare tre discipline contemporaneamente.
+            Il rischio più comune è distribuire il tempo equamente — ma non tutte
+            le discipline hanno lo stesso peso sul tempo totale.
+          </p>
+
+          <h3>La distribuzione ideale del tempo di allenamento</h3>
+          <p>
+            Per un amatore con 8-10 ore settimanali disponibili, una distribuzione efficace è:
+          </p>
+          <ul class="guide-list">
+            <li><strong>Bici: 50-55%</strong> — è la frazione più lunga e quella dove si guadagna più tempo</li>
+            <li><strong>Corsa: 30-35%</strong> — altamente impattante sul totale, ma rischio infortuni alto</li>
+            <li><strong>Nuoto: 15-20%</strong> — la frazione più corta; dopo un livello base, i ritorni marginali diminuiscono</li>
+          </ul>
+
+          <h3>Il brick training: l'allenamento specifico del triathlon</h3>
+          <p>
+            Il <strong>brick training</strong> consiste nel correre subito dopo la bici, senza recupero.
+            È l'allenamento più importante per il triatleta perché:
+          </p>
+          <ul class="guide-list">
+            <li>Le gambe devono adattarsi al cambio di movimento (pedalata circolare → corsa)</li>
+            <li>I primi 1-2 km di corsa post-bici si sentono sempre "strani": solo la pratica lo normalizza</li>
+            <li>Allena la gestione mentale della stanchezza cumulata</li>
+          </ul>
+          <p>
+            Inserisci almeno <strong>1 brick a settimana</strong> nel piano di allenamento,
+            anche breve: 40min bici + 20min corsa è meglio di nulla.
+          </p>
+
+          <h3>Le zone di allenamento</h3>
+          <p>
+            Allenarsi a caso (tutte le sessioni a ritmo "medio") è l'errore più comune.
+            Il metodo più efficace è la <strong>polarizzazione</strong>: 80% del volume in Zona 2
+            (sforzo aerobico leggero, puoi parlare), 20% ad alta intensità.
+          </p>
+          <p>
+            Usa il <a href="/#calculator">calcolatore TriCalculator</a> per calcolare
+            le tue zone Z1-Z5 personalizzate in base a FTP e ritmo 10km.
+          </p>
+        </section>
+
+        <!-- Transizioni -->
+        <section id="transizioni" class="guide-section">
+          <h2>Le transizioni T1 e T2</h2>
+          <p>
+            Le transizioni sono la "quarta disciplina" del triathlon. Un atleta
+            organizzato può guadagnare 2-4 minuti sul totale senza alcuno sforzo fisico aggiuntivo.
+          </p>
+
+          <div class="transition-grid">
+            <div class="trans-block">
+              <h3>T1 — Nuoto → Bici</h3>
+              <ul class="guide-list">
+                <li>Corri fuori dall'acqua togliendo subito la cuffia e gli occhialini</li>
+                <li>Togli la muta mentre cammini (non fermarti)</li>
+                <li>Prepara casco e occhiali da sole già aperti sulla bici</li>
+                <li>Inserisci le scarpe già nei pedali: monta in sella a piedi scalzi, poi calza le scarpe in movimento</li>
+                <li>Pratica T1 a casa: cronometrala, diventa una routine</li>
+              </ul>
+            </div>
+            <div class="trans-block">
+              <h3>T2 — Bici → Corsa</h3>
+              <ul class="guide-list">
+                <li>Togli i piedi dalle scarpe negli ultimi 200m prima del dismount</li>
+                <li>Posa la bici, togli il casco solo dopo aver lasciato la bici nel rack</li>
+                <li>Usa lacci elastici: zero secondi per allacciare le scarpe</li>
+                <li>Il numero di gara deve già essere sul cinturino, girato sulla schiena in bici e spostato davanti in corsa</li>
+                <li>Gel pre-posizionato nelle tasche del trisuit per la corsa</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Nutrizione -->
+        <section id="nutrizione" class="guide-section">
+          <h2>Nutrizione in gara</h2>
+
+          <h3>Per distanza breve (Sprint e Olimpico)</h3>
+          <p>
+            Sotto le 2 ore non hai bisogno di mangiare in gara. Idratati con acqua
+            o isotonica (200-300ml ogni 30min in bici). Un gel opzionale a metà bici
+            non fa male per l'Olimpico.
+          </p>
+
+          <h3>Per distanza lunga (70.3 e Ironman)</h3>
+          <p>
+            La nutrizione è la variabile che può distruggerti o salvarti in gara.
+            Obiettivo: <strong>60-90g di carboidrati per ora</strong> in bici,
+            40-60g in corsa (lo stomaco lavora meno bene durante la corsa).
+          </p>
+          <ul class="guide-list">
+            <li><strong>Gel</strong>: 20-22g di CHO ciascuno — ogni 20-25min in corsa</li>
+            <li><strong>Barrette</strong>: utili in bici nei primi 60-90min quando si digerisce meglio</li>
+            <li><strong>Drink isotonici</strong>: CHO + elettroliti, ideali in bici</li>
+            <li><strong>Sodio</strong>: fondamentale per gare > 4 ore — previene i crampi da iponatriemia</li>
+          </ul>
+
+          <h3>Il carb loading pre-gara</h3>
+          <p>
+            Nelle 48-24 ore prima della gara, aumenta i carboidrati a 8-12g/kg
+            (per un Full IM) riducendo drasticamente fibre, grassi e proteine.
+            Il <a href="/#calculator">calcolatore TriCalculator</a> ti dà
+            i grammi personalizzati in base al tuo peso e alla distanza.
+          </p>
+        </section>
+
+        <!-- Taper -->
+        <section id="taper" class="guide-section">
+          <h2>Il taper pre-gara</h2>
+          <p>
+            Il <strong>taper</strong> è la riduzione progressiva del volume nelle settimane
+            prima della gara. È fondamentale per arrivare riposato e al massimo
+            della forma — ma molti atleti lo fanno male.
+          </p>
+          <ul class="guide-list">
+            <li><strong>Riduci il volume, non l'intensità</strong> — mantieni 2-3 sessioni di qualità anche durante il taper</li>
+            <li>Sprint: 7 giorni di taper | Olimpico: 10-14 giorni | 70.3: 2 settimane | Ironman: 3 settimane</li>
+            <li>È normale sentirsi "pesanti" e stanchi nei primi giorni di taper — è la supercompensazione</li>
+            <li>Non aggiungere allenamenti extra per "sentirsi meglio" — il corpo si sta adattando</li>
+          </ul>
+          <p>
+            Il piano taper personalizzato per distanza è disponibile nel
+            <a href="/#calculator">calcolatore TriCalculator</a>.
+          </p>
+        </section>
+
+        <!-- Consigli -->
+        <section id="consigli" class="guide-section">
+          <h2>10 consigli per il tuo primo triathlon</h2>
+          <ol class="guide-list-numbered">
+            <li><strong>Scegli una distanza realistica</strong> — lo Sprint è il punto di partenza ideale per tutti.</li>
+            <li><strong>Non comprare attrezzatura costosa subito</strong> — finisci il primo triathlon con quello che hai.</li>
+            <li><strong>Fai almeno 3 sessioni di nuoto in acque aperte</strong> prima della gara — è molto diverso dalla vasca.</li>
+            <li><strong>Allena le transizioni</strong> — sono la quarta disciplina e spesso trascurata.</li>
+            <li><strong>Non prova nulla di nuovo il giorno di gara</strong> — né cibo, né attrezzatura, né strategia mai provata.</li>
+            <li><strong>Parti lento in bici</strong> — è quasi impossibile non esagerare nei primi chilometri per l'adrenalina.</li>
+            <li><strong>Idratati anche quando non hai sete</strong> — la sete arriva in ritardo rispetto alla disidratazione.</li>
+            <li><strong>Conosci il percorso</strong> — studia la mappa, i punti di ristoro e il profilo altimetrico in bici.</li>
+            <li><strong>Rispetta il taper</strong> — gli ultimi allenamenti intensi non servono a niente a 5 giorni dalla gara.</li>
+            <li><strong>Goditi ogni momento</strong> — il primo triathlon si fa una volta sola. Sorridi, saluta, e arriva al traguardo.</li>
+          </ol>
+        </section>
+
+        <div class="guide-cta-bottom">
+          <p>Pronto a calcolare i tuoi tempi stimati?</p>
+          <a href="/" class="btn-cta-guide">Usa TriCalculator gratuitamente →</a>
+        </div>
+
+      </div><!-- end guide-content -->
+    </div><!-- end guide-grid -->
+
+  </div>
+</Layout>
+
+<style>
+  .guide-header {
+    padding: 2.5rem 0 2rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 0;
+  }
+
+  .guide-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 0.75rem;
+  }
+
+  .guide-subtitle {
+    font-size: 1.05rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+  }
+
+  .guide-cta {
+    display: inline-block;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+
+  .guide-cta:hover { border-color: var(--color-primary); }
+
+  .guide-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 3rem;
+    align-items: start;
+    padding: 2rem 0;
+  }
+
+  @media (max-width: 900px) {
+    .guide-grid { grid-template-columns: 1fr; }
+  }
+
+  /* TOC */
+  .guide-toc {
+    position: sticky;
+    top: 80px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+
+  @media (max-width: 900px) {
+    .guide-toc { position: static; }
+  }
+
+  .guide-toc-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .guide-toc-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .guide-toc-list a {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    transition: color 0.15s;
+    display: block;
+    padding: 3px 0;
+    border-left: 2px solid transparent;
+    padding-left: 8px;
+  }
+
+  .guide-toc-list a:hover {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  /* Content */
+  .guide-section {
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .guide-section:last-of-type { border-bottom: none; }
+
+  .guide-section h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: var(--color-text);
+    scroll-margin-top: 80px;
+  }
+
+  .guide-section h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 1.5rem 0 0.5rem;
+    color: var(--color-text);
+  }
+
+  .guide-section p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .guide-section a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .guide-section a:hover { text-decoration: underline; }
+
+  .guide-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .guide-list li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .guide-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .guide-list-numbered {
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .guide-list-numbered li {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+  }
+
+  /* Distance cards */
+  .distance-cards-guide {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 700px) {
+    .distance-cards-guide { grid-template-columns: 1fr; }
+  }
+
+  .dist-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .dist-card-header {
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #fff;
+  }
+
+  .dist-card-header.sprint  { background: #2D7A4F; }
+  .dist-card-header.olympic { background: #2563A8; }
+  .dist-card-header.half    { background: #B07D2E; }
+  .dist-card-header.full    { background: var(--color-primary); }
+
+  .dist-card-body {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .dist-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .dist-row.total {
+    border-top: 1px solid var(--color-border);
+    padding-top: 6px;
+    margin-top: 2px;
+    color: var(--color-text);
+    font-size: 0.82rem;
+  }
+
+  .dist-desc {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    padding: 0 16px 14px;
+    margin: 0;
+  }
+
+  /* Equipment */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 800px) {
+    .equip-grid { grid-template-columns: 1fr; }
+  }
+
+  .equip-block {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+  }
+
+  .equip-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.75rem;
+  }
+
+  .swim-color { color: var(--color-swim); }
+  .bike-color { color: var(--color-bike); }
+  .run-color  { color: var(--color-run);  }
+
+  .equip-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .equip-list li {
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
+    padding-left: 12px;
+    position: relative;
+  }
+
+  .equip-list li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: 900;
+  }
+
+  /* Transitions */
+  .transition-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 700px) {
+    .transition-grid { grid-template-columns: 1fr; }
+  }
+
+  .trans-block {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+  }
+
+  .trans-block h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin: 0 0 0.75rem !important;
+  }
+
+  /* CTA bottom */
+  .guide-cta-bottom {
+    text-align: center;
+    padding: 2.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    margin-top: 1rem;
+  }
+
+  .guide-cta-bottom p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-text) !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .btn-cta-guide {
+    display: inline-block;
+    background: var(--color-primary);
+    color: #fff !important;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none !important;
+    font-size: 0.95rem;
+    transition: background 0.15s;
+  }
+
+  .btn-cta-guide:hover { background: var(--color-primary-dark) !important; text-decoration: none !important; }
+</style>
