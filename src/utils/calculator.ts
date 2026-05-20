@@ -273,11 +273,17 @@ function calcBikeTime(data: AthleteData, bikeM: number, format: string): Fractio
 // RUN CALCULATION
 // ============================================================
 
+// Fatigue factors: how much slower the triathlon run split is vs standalone running.
+// Based on published race data for amateur triathletes (Lepers et al., Friel):
+//   Sprint:  5–8% slower  → 1.07 (mid-range)
+//   Olympic: 8–12% slower → 1.11
+//   Half:    12–15% slower → 1.14
+//   Full:    20–25% slower → 1.22
 const FATIGUE_FACTORS: Record<string, number> = {
-  sprint: 1.03,
-  olympic: 1.05,
-  half: 1.08,
-  full: 1.13,
+  sprint: 1.07,
+  olympic: 1.11,
+  half: 1.14,
+  full: 1.22,
 };
 
 /**
