@@ -271,6 +271,82 @@ const defaults = {
       </button>
     </div>
 
+    <!-- Share Modal -->
+    <div id="share-modal" class="share-modal" role="dialog" aria-modal="true" style="display:none">
+      <div class="share-modal-overlay" id="share-modal-overlay"></div>
+      <div class="share-modal-box">
+        <div class="share-modal-header">
+          <span class="share-modal-title">Condividi i tuoi tempi</span>
+          <button class="share-modal-close" id="share-modal-close" aria-label="Chiudi" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+
+        <!-- Preview card (stile Strava) -->
+        <div class="share-preview" id="share-preview">
+          <div class="share-preview-header">
+            <span class="share-preview-logo"><span style="color:#E53E3E">TRI</span>CALCULATOR</span>
+            <span class="share-preview-url">tricalculator.app</span>
+          </div>
+          <div class="share-preview-label">Tempi stimati di gara</div>
+          <div class="share-preview-table" id="share-preview-table">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- Social buttons -->
+        <div class="share-socials-grid">
+          <!-- WhatsApp -->
+          <a class="share-social-btn" id="ss-whatsapp" target="_blank" rel="noopener" title="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.057 23.625a.5.5 0 0 0 .618.618l5.78-1.471A11.944 11.944 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.882a9.866 9.866 0 0 1-5.031-1.375l-.361-.214-3.733.951.968-3.633-.235-.374A9.843 9.843 0 0 1 2.118 12C2.118 6.528 6.528 2.118 12 2.118S21.882 6.528 21.882 12 17.472 21.882 12 21.882z"/></svg>
+            WhatsApp
+          </a>
+          <!-- Telegram -->
+          <a class="share-social-btn" id="ss-telegram" target="_blank" rel="noopener" title="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.04 14.605l-2.95-.924c-.64-.203-.652-.64.136-.954l11.5-4.433c.537-.194 1.006.131.833.927h-.665z"/></svg>
+            Telegram
+          </a>
+          <!-- X / Twitter -->
+          <a class="share-social-btn" id="ss-twitter" target="_blank" rel="noopener" title="X / Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            X / Twitter
+          </a>
+          <!-- Facebook -->
+          <a class="share-social-btn" id="ss-facebook" target="_blank" rel="noopener" title="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <!-- LinkedIn -->
+          <a class="share-social-btn" id="ss-linkedin" target="_blank" rel="noopener" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            LinkedIn
+          </a>
+          <!-- Strava -->
+          <button class="share-social-btn" id="ss-strava" type="button" title="Strava">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.599h4.172L10.463 0l-7 13.828h4.169"/></svg>
+            Strava
+          </button>
+          <!-- Instagram -->
+          <button class="share-social-btn" id="ss-instagram" type="button" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+            Instagram
+          </button>
+          <!-- TikTok -->
+          <button class="share-social-btn" id="ss-tiktok" type="button" title="TikTok">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            TikTok
+          </button>
+          <!-- Copia link -->
+          <button class="share-social-btn" id="ss-copy" type="button" title="Copia testo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copia testo
+          </button>
+        </div>
+
+        <div class="share-feedback" id="share-feedback" style="display:none"></div>
+      </div>
+    </div>
+
     <!-- Distance detail cards -->
     <div class="distance-cards-grid">
       {[
@@ -1289,31 +1365,118 @@ const defaults = {
     });
   });
 
-  // ── Share results ─────────────────────────────────────────
-  document.getElementById('btn-share')?.addEventListener('click', () => {
+  // ── Share modal ───────────────────────────────────────────
+  function buildShareTexts() {
     const data = parseFormData();
-    const results = calcAllDistances(data);
-    const lines = results
-      .filter(r => r.totalSec !== null)
-      .map(r => `${r.name}: 🏊 ${r.swim?.displayTime ?? '—'} | 🚴 ${r.bike?.displayTime ?? '—'} | 🏃 ${r.run?.displayTime ?? '—'} → ${r.totalDisplay}`)
-      .join('\n');
+    const results = calcAllDistances(data).filter(r => r.totalSec !== null);
+    if (!results.length) return null;
 
-    if (!lines) return;
+    // Preview table HTML
+    const tableHtml = results.map(r => `
+      <div class="sp-row">
+        <span class="sp-name">${r.name}</span>
+        <span class="sp-swim">🏊 ${r.swim?.displayTime ?? '—'}</span>
+        <span class="sp-bike">🚴 ${r.bike?.displayTime ?? '—'}</span>
+        <span class="sp-run">🏃 ${r.run?.displayTime ?? '—'}</span>
+        <span class="sp-total">${r.totalDisplay}</span>
+      </div>`).join('');
 
-    const text = `I miei tempi stimati al triathlon:\n\n${lines}\n\nCalcolato con TriCalculator → tricalculator.app`;
-    const btn = document.getElementById('btn-share')!;
+    // Plain text (WhatsApp, Telegram, copy)
+    const lines = results.map(r =>
+      `${r.name}: 🏊 ${r.swim?.displayTime ?? '—'} | 🚴 ${r.bike?.displayTime ?? '—'} | 🏃 ${r.run?.displayTime ?? '—'} → ${r.totalDisplay}`
+    ).join('\n');
+    const plain = `I miei tempi stimati al triathlon:\n\n${lines}\n\nCalcolato con TriCalculator → tricalculator.app`;
 
-    if (navigator.share) {
-      navigator.share({ text }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(text).then(() => {
-        btn.textContent = '✓ Copiato negli appunti!';
-        setTimeout(() => {
-          btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Condividi i tuoi tempi`;
-        }, 2500);
-      }).catch(() => {});
-    }
-  });
+    // Twitter (short)
+    const totals = results.map(r => `${r.name}: ${r.totalDisplay}`).join(' | ');
+    const tweet = `I miei tempi stimati al triathlon 🏊🚴🏃\n${totals}\n\nCalcolato su tricalculator.app #triathlon #triathlete #ironman`;
+
+    // Strava
+    const stravaLines = results.map(r =>
+      `${r.name}: 🏊 ${r.swim?.displayTime ?? '—'} | 🚴 ${r.bike?.displayTime ?? '—'} | 🏃 ${r.run?.displayTime ?? '—'} | ⏱ ${r.totalDisplay}`
+    ).join('\n');
+    const strava = `📊 Analisi tempi pre-gara\n\n${stravaLines}\n\nCalcolato con TriCalculator → tricalculator.app\n\n#triathlon #ironman70dot3 #triathlete #trilife #training`;
+
+    // Instagram/TikTok
+    const igTk = `${plain}\n\n#triathlon #triathlete #ironman #ironman703 #triathlontraining #trilife #swimming #cycling #running`;
+
+    return { tableHtml, plain, tweet, strava, igTk };
+  }
+
+  function showFeedback(msg: string) {
+    const el = document.getElementById('share-feedback');
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 2500);
+  }
+
+  function copyAndFeedback(text: string, msg: string) {
+    navigator.clipboard.writeText(text).then(() => showFeedback(msg)).catch(() => {});
+  }
+
+  function openModal() {
+    const texts = buildShareTexts();
+    const modal = document.getElementById('share-modal');
+    if (!modal) return;
+    if (!texts) { showFeedback('Inserisci almeno un tempo per condividere.'); return; }
+
+    // Populate preview
+    const table = document.getElementById('share-preview-table');
+    if (table) table.innerHTML = texts.tableHtml;
+
+    const url = 'https://tricalculator.app';
+    const enc = encodeURIComponent;
+
+    // Wire up links
+    const wa = document.getElementById('ss-whatsapp') as HTMLAnchorElement;
+    if (wa) wa.href = `https://wa.me/?text=${enc(texts.plain)}`;
+
+    const tg = document.getElementById('ss-telegram') as HTMLAnchorElement;
+    if (tg) tg.href = `https://t.me/share/url?url=${enc(url)}&text=${enc(texts.plain)}`;
+
+    const tw = document.getElementById('ss-twitter') as HTMLAnchorElement;
+    if (tw) tw.href = `https://twitter.com/intent/tweet?text=${enc(texts.tweet)}`;
+
+    const fb = document.getElementById('ss-facebook') as HTMLAnchorElement;
+    if (fb) fb.href = `https://www.facebook.com/sharer/sharer.php?u=${enc(url)}&quote=${enc(texts.plain)}`;
+
+    const li = document.getElementById('ss-linkedin') as HTMLAnchorElement;
+    if (li) li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${enc(url)}`;
+
+    document.getElementById('ss-strava')?.addEventListener('click', () => {
+      copyAndFeedback(texts.strava, '✓ Testo copiato! Aprendo Strava…');
+      setTimeout(() => window.open('https://www.strava.com/athlete/posts', '_blank'), 600);
+    }, { once: true });
+
+    document.getElementById('ss-instagram')?.addEventListener('click', () => {
+      copyAndFeedback(texts.igTk, '✓ Testo copiato! Aprendo Instagram…');
+      setTimeout(() => window.open('https://www.instagram.com/', '_blank'), 600);
+    }, { once: true });
+
+    document.getElementById('ss-tiktok')?.addEventListener('click', () => {
+      copyAndFeedback(texts.igTk, '✓ Testo copiato! Aprendo TikTok…');
+      setTimeout(() => window.open('https://www.tiktok.com/upload', '_blank'), 600);
+    }, { once: true });
+
+    document.getElementById('ss-copy')?.addEventListener('click', () => {
+      copyAndFeedback(texts.plain, '✓ Testo copiato negli appunti!');
+    }, { once: true });
+
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('share-modal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('btn-share')?.addEventListener('click', openModal);
+  document.getElementById('share-modal-close')?.addEventListener('click', closeModal);
+  document.getElementById('share-modal-overlay')?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
   // ── Zones tabs ────────────────────────────────────────────
   document.querySelectorAll('.zones-tab').forEach((btn) => {
