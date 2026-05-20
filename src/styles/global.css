@@ -1046,6 +1046,212 @@ input::placeholder {
 }
 
 /* ============================================
+   COACHING SECTION
+   ============================================ */
+.btn-coaching {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.5rem;
+  background: transparent;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 0.15s, color 0.15s;
+}
+
+.btn-coaching:hover,
+.btn-coaching.active {
+  background: var(--color-primary);
+  color: white;
+}
+
+#coaching-section {
+  margin-top: 1.25rem;
+}
+
+.coaching-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: rgba(229, 62, 62, 0.1);
+  border: 1px solid rgba(229, 62, 62, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: var(--color-text);
+  margin-bottom: 0.875rem;
+}
+
+.coaching-banner svg {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.coaching-hours {
+  display: flex;
+  align-items: baseline;
+  gap: 0.375rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+}
+
+.coaching-hours-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  color: var(--color-text);
+}
+
+/* Coaching tabs */
+.coaching-tabs {
+  display: flex;
+  gap: 0.375rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.coaching-tab {
+  flex: 1;
+  min-width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.5rem 0.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.coaching-tab-icon { font-size: 1rem; }
+
+.coaching-tab.active {
+  background: var(--color-surface-2);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Coaching panel */
+.coaching-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.coaching-no-data {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.coaching-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.coaching-level-badge {
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.coaching-level-badge[data-level="Principiante"] { border-color: #4A5568; color: #A0AEC0; }
+.coaching-level-badge[data-level="Amatore"]      { border-color: #2B6CB0; color: #63B3ED; }
+.coaching-level-badge[data-level="Competitivo"]  { border-color: #276749; color: #68D391; }
+.coaching-level-badge[data-level="Elite"]        { border-color: var(--color-primary); color: var(--color-primary); }
+.coaching-level-badge.is-limiting                { box-shadow: 0 0 0 2px rgba(229,62,62,0.3); }
+
+.coaching-volume {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.coaching-priority {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.625rem;
+  border-radius: 999px;
+}
+
+.coaching-priority[data-priority="Alta"]   { background: rgba(229,62,62,0.15);  color: var(--color-primary); }
+.coaching-priority[data-priority="Media"]  { background: rgba(214,158,46,0.15); color: var(--color-bike); }
+.coaching-priority[data-priority="Bassa"]  { background: rgba(56,161,105,0.15); color: var(--color-swim); }
+
+.coaching-weakness {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+  padding: 0.625rem 0.875rem;
+  background: var(--color-surface-2);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 1rem;
+}
+
+.coaching-tips {
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.coaching-tips li {
+  font-size: 0.855rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.coaching-tips li::marker {
+  color: var(--color-primary);
+}
+
+.coaching-example {
+  background: rgba(56, 161, 105, 0.06);
+  border: 1px solid rgba(56, 161, 105, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.coaching-example-label {
+  display: block;
+  font-weight: 700;
+  color: var(--color-swim);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+/* ============================================
    FOOTER
    ============================================ */
 .site-footer {
@@ -1089,6 +1295,126 @@ input::placeholder {
   letter-spacing: 0.1em;
   color: var(--color-text-secondary);
   margin-bottom: 1rem;
+}
+
+/* ============================================
+   TRAINING ZONES
+   ============================================ */
+.zones-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+
+.zones-tab {
+  flex: 1;
+  padding: 8px 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.zones-tab.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.zones-meta-info {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-2);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.zones-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.zone-row {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface-2);
+  border-left: 4px solid;
+}
+
+.zone-1 { border-color: #48BB78; }
+.zone-2 { border-color: #4299E1; }
+.zone-3 { border-color: #ECC94B; }
+.zone-4 { border-color: #ED8936; }
+.zone-5 { border-color: #FC5C7D; }
+
+.zone-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  min-width: 28px;
+}
+
+.zone-1 .zone-badge { background: rgba(72, 187, 120, 0.18); color: #48BB78; }
+.zone-2 .zone-badge { background: rgba(66, 153, 225, 0.18); color: #4299E1; }
+.zone-3 .zone-badge { background: rgba(236, 201, 75, 0.18);  color: #ECC94B; }
+.zone-4 .zone-badge { background: rgba(237, 137, 54, 0.18);  color: #ED8936; }
+.zone-5 .zone-badge { background: rgba(252, 92, 125, 0.18);  color: #FC5C7D; }
+
+.zone-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.zone-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.zone-desc {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+}
+
+.zone-values {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.zone-range {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.zone-pct {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--color-text-secondary);
+}
+
+.zones-note {
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  margin-top: 12px;
+  line-height: 1.5;
 }
 
 /* ============================================
