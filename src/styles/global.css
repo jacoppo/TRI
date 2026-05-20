@@ -1,5 +1,5 @@
 /* ============================================
-   CSS VARIABLES
+   CSS VARIABLES — DARK MODE (default)
    ============================================ */
 :root {
   --color-primary: #E53E3E;
@@ -17,6 +17,19 @@
   --radius-md: 12px;
   --radius-sm: 8px;
   --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================================
+   CSS VARIABLES — LIGHT MODE
+   ============================================ */
+[data-theme="light"] {
+  --color-bg: #F8F8F8;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F0F0F0;
+  --color-text: #1A1A1A;
+  --color-text-secondary: #555555;
+  --color-border: #DEDEDE;
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
 }
 
 /* ============================================
@@ -99,6 +112,31 @@ main {
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
+
+.theme-toggle {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-secondary);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* In dark mode mostra l'icona sole (per passare al giorno) */
+html:not([data-theme="light"]) .icon-moon { display: none; }
+/* In light mode mostra l'icona luna (per passare alla notte) */
+[data-theme="light"] .icon-sun { display: none; }
 
 /* ============================================
    DASHBOARD GRID
