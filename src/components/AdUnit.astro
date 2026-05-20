@@ -1,12 +1,14 @@
 ---
 interface Props {
   slot?: 'leaderboard' | 'rectangle' | 'skyscraper';
+  slotId: string;
   label?: string;
   class?: string;
 }
 
 const {
   slot: adSlot = 'rectangle',
+  slotId,
   label = 'Pubblicità',
   class: className = '',
 } = Astro.props;
@@ -28,8 +30,8 @@ const adClass = {
       class="adsbygoogle"
       style="display:block"
       data-ad-client="ca-pub-9090975380946777"
-      data-ad-slot="YYYYYYYYYY"
-      data-ad-format={adSlot === 'leaderboard' ? 'horizontal' : adSlot === 'skyscraper' ? 'vertical' : 'rectangle'}
+      data-ad-slot={slotId}
+      data-ad-format="auto"
       data-full-width-responsive="true"
     ></ins>
     <script type="text/partytown">
