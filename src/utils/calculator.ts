@@ -282,8 +282,17 @@ export function calcRouteResult(data: AthleteData, route: RouteData): FractionRe
 
 /**
  * Calculates estimated bike time for a given distance and race format.
+ * If gainPerM / lossPerM are provided (from a loaded GPX/manual route),
+ * the same elevation density is applied proportionally to this distance
+ * using the same 3-segment model as calcRouteResult.
  */
-function calcBikeTime(data: AthleteData, bikeM: number, format: string): FractionResult | null {
+function calcBikeTime(
+  data: AthleteData,
+  bikeM: number,
+  format: string,
+  gainPerM: number = 0,
+  lossPerM: number = 0,
+): FractionResult | null {
   let watts: number;
 
   if (format === 'sprint' || format === 'olympic') {
@@ -297,10 +306,35 @@ function calcBikeTime(data: AthleteData, bikeM: number, format: string): Fractio
 
   if (!watts || watts <= 0) return null;
 
-  const speedMs = solveForSpeedMs(watts, data.weightKg);
-  const speedKmh = speedMs * 3.6;
-  const bikeKm = bikeM / 1000;
-  const estimatedSec = (bikeKm / speedKmh) * 3600;
+  // If no elevation data, use flat model
+  if (gainPerM === 0 && lossPerM === 0) {
+    const speedMs = solveForSpeedMs(watts, data.weightKg);
+    const speedKmh = speedMs * 3.6;
+    const estimatedSec = (bikeM / 1000 / speedKmh) * 3600;
+    return { seconds: estimatedSec, displayTime: formatSeconds(estimatedSec), speedKmh };
+  }
+
+  // Apply same elevation density proportionally to this race distance (3-segment model)
+  const AVG_GRADE = 0.05;
+  const MAX_DOWN_MS = 15;
+  const gainM = gainPerM * bikeM;
+  const lossM = lossPerM * bikeM;
+
+  let distUp   = gainM / AVG_GRADE;
+  let distDown = lossM / AVG_GRADE;
+  if (distUp + distDown > bikeM) {
+    const scale = bikeM / (distUp + distDown);
+    distUp   *= scale;
+    distDown *= scale;
+  }
+  const distFlat = Math.max(0, bikeM - distUp - distDown);
+
+  const vUp   = solveForSpeedMs(watts, data.weightKg, AVG_GRADE);
+  const vFlat = solveForSpeedMs(watts, data.weightKg, 0);
+  const vDown = Math.min(solveForSpeedMs(watts, data.weightKg, -AVG_GRADE), MAX_DOWN_MS);
+
+  const estimatedSec = (distUp / vUp) + (distFlat / vFlat) + (distDown / vDown);
+  const speedKmh = (bikeM / 1000) / (estimatedSec / 3600);
 
   return {
     seconds: estimatedSec,
@@ -446,10 +480,21 @@ export function calcAthleteLevel(data: AthleteData): AthleteLevel {
 /**
  * Calculates estimated times for all four triathlon distances.
  */
-export function calcAllDistances(data: AthleteData): RaceResult[] {
+export function calcAllDistances(data: AthleteData, route: RouteData | null = null): RaceResult[] {
+  // If a route is loaded, extract elevation density (m of gain per m of distance)
+  // and apply it proportionally to each race distance.
+  let gainPerM = 0;
+  let lossPerM = 0;
+  if (route && route.distanceM > 0) {
+    gainPerM = route.elevationGainM / route.distanceM;
+    // For manual input (loss = 0), assume symmetric loop: loss = gain
+    const effectiveLoss = route.elevationLossM > 0 ? route.elevationLossM : route.elevationGainM;
+    lossPerM = effectiveLoss / route.distanceM;
+  }
+
   return DISTANCES.map((d) => {
     const swim = calcSwimTime(data, d.swimM, d.key);
-    const bike = calcBikeTime(data, d.bikeM, d.key);
+    const bike = calcBikeTime(data, d.bikeM, d.key, gainPerM, lossPerM);
     const run = calcRunTime(data, d.runM, d.key);
 
     let totalSec: number | null = null;

@@ -795,7 +795,7 @@ const defaults = {
   // ── Update UI ─────────────────────────────────────────────
   function updateUI() {
     const data = parseFormData();
-    const results = calcAllDistances(data);
+    const results = calcAllDistances(data, currentRoute);
     const level = calcAthleteLevel(data);
 
     // Athlete level badge
@@ -1376,7 +1376,7 @@ const defaults = {
   // ── Share modal ───────────────────────────────────────────
   function buildShareTexts() {
     const data = parseFormData();
-    const results = calcAllDistances(data).filter(r => r.totalSec !== null);
+    const results = calcAllDistances(data, currentRoute).filter(r => r.totalSec !== null);
     if (!results.length) return null;
 
     // Preview table HTML
@@ -1484,7 +1484,7 @@ const defaults = {
   // ── Generate share card (Canvas PNG) ─────────────────────
   function generateCard() {
     const data = parseFormData();
-    const results = calcAllDistances(data).filter(r => r.totalSec !== null);
+    const results = calcAllDistances(data, currentRoute).filter(r => r.totalSec !== null);
     if (!results.length) { showFeedback('Inserisci almeno un tempo per generare la card.'); return; }
 
     const size = 1080;
