@@ -963,7 +963,7 @@ const defaults = {
         <span class="gpx-stat"><strong>+${Math.round(route.elevationGainM)} m</strong><em>Dislivello +</em></span>
         <span class="gpx-stat"><strong>-${Math.round(route.elevationLossM)} m</strong><em>Dislivello -</em></span>
       </div>
-      ${route.name ? `<p class="gpx-name">${route.name}</p>` : ''}
+      ${route.name ? `<p class="gpx-name">${route.name.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')}</p>` : ''}
     `;
     el.style.display = 'block';
   }
