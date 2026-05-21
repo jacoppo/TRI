@@ -442,6 +442,11 @@ input::placeholder {
   margin-top: 1.25rem;
 }
 
+/* Reset the generic .card + .card margin inside the grid — the gap handles spacing */
+.distance-cards-grid .card + .card {
+  margin-top: 0;
+}
+
 @media (max-width: 600px) {
   .distance-cards-grid {
     grid-template-columns: 1fr;

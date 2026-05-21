@@ -480,21 +480,37 @@ export function calcAthleteLevel(data: AthleteData): AthleteLevel {
 /**
  * Calculates estimated times for all four triathlon distances.
  */
+/**
+ * Returns which race format key a route distance maps to:
+ *   ≤ 30 km  → sprint  (20 km bike)
+ *   ≤ 60 km  → olympic (40 km bike)
+ *   ≤ 120 km → half    (90 km bike)
+ *   > 120 km → full    (180 km bike)
+ */
+function routeFormatKey(distanceM: number): string {
+  if (distanceM <= 30000)  return 'sprint';
+  if (distanceM <= 60000)  return 'olympic';
+  if (distanceM <= 120000) return 'half';
+  return 'full';
+}
+
 export function calcAllDistances(data: AthleteData, route: RouteData | null = null): RaceResult[] {
-  // If a route is loaded, extract elevation density (m of gain per m of distance)
-  // and apply it proportionally to each race distance.
+  // Elevation is applied only to the race format whose distance matches the route.
+  // Other formats use flat terrain (standard reference).
+  let matchingFormat: string | null = null;
   let gainPerM = 0;
   let lossPerM = 0;
-  if (route && route.distanceM > 0) {
+  if (route && route.distanceM > 0 && route.elevationGainM > 0) {
+    matchingFormat = routeFormatKey(route.distanceM);
     gainPerM = route.elevationGainM / route.distanceM;
-    // For manual input (loss = 0), assume symmetric loop: loss = gain
     const effectiveLoss = route.elevationLossM > 0 ? route.elevationLossM : route.elevationGainM;
     lossPerM = effectiveLoss / route.distanceM;
   }
 
   return DISTANCES.map((d) => {
     const swim = calcSwimTime(data, d.swimM, d.key);
-    const bike = calcBikeTime(data, d.bikeM, d.key, gainPerM, lossPerM);
+    const isMatch = d.key === matchingFormat;
+    const bike = calcBikeTime(data, d.bikeM, d.key, isMatch ? gainPerM : 0, isMatch ? lossPerM : 0);
     const run = calcRunTime(data, d.runM, d.key);
 
     let totalSec: number | null = null;
