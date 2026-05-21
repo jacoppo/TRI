@@ -204,10 +204,22 @@ function solveForSpeedMs(watts: number, weightKg: number, gradient: number = 0):
 }
 
 /**
- * Calculates estimated speed and time for a specific GPX/manual route,
- * accounting for elevation gain via the aerodynamic model with gradient correction.
+ * Calculates estimated speed and time for a specific GPX/manual route using
+ * a 3-segment model (uphill / flat / downhill) that correctly accounts for
+ * both elevation gain AND loss.
  *
- * @param data - Athlete data (weight, watts)
+ * Previous single-gradient model was wrong because it treated the whole route
+ * as a constant uphill grade, ignoring that descents give free speed back.
+ *
+ * Model assumptions:
+ *   - Average climb/descent grade: 5% (typical triathlon hilly course)
+ *   - Uphill distance  = elevationGain / 0.05
+ *   - Downhill distance = elevationLoss / 0.05
+ *   - Flat distance = total - uphill - downhill (≥ 0)
+ *   - Downhill speed capped at 54 km/h (15 m/s) for safety/realism
+ *   - For manual input (loss = 0), assumes a symmetric course: loss ≈ gain
+ *
+ * @param data  - Athlete data (weight, watts)
  * @param route - Route data from GPX or manual input
  */
 export function calcRouteResult(data: AthleteData, route: RouteData): FractionResult | null {
@@ -225,18 +237,46 @@ export function calcRouteResult(data: AthleteData, route: RouteData): FractionRe
 
   if (!watts || watts <= 0) return null;
 
-  // Effective gradient = total elevation gain / total distance
-  const effectiveGradient = route.elevationGainM / route.distanceM;
+  const D = route.distanceM;
+  const gainM = route.elevationGainM;
+  // For manual input (loss = 0) assume a symmetric/loop course: loss ≈ gain
+  const lossM = route.elevationLossM > 0 ? route.elevationLossM : gainM;
 
-  const speedMs = solveForSpeedMs(watts, data.weightKg, effectiveGradient);
-  const speedKmh = speedMs * 3.6;
-  const distanceKm = route.distanceM / 1000;
-  const estimatedSec = (distanceKm / speedKmh) * 3600;
+  // Flat route — simple single-speed calculation
+  if (gainM === 0 && lossM === 0) {
+    const speedMs = solveForSpeedMs(watts, data.weightKg, 0);
+    const speedKmh = speedMs * 3.6;
+    const estimatedSec = (D / 1000 / speedKmh) * 3600;
+    return { seconds: estimatedSec, displayTime: formatSeconds(estimatedSec), speedKmh };
+  }
+
+  // 3-segment model
+  const AVG_GRADE = 0.05; // 5% assumed average slope for climb/descent sections
+  const MAX_DOWN_MS = 15; // 54 km/h downhill speed cap
+
+  let distUp   = gainM / AVG_GRADE;  // distance spent climbing
+  let distDown = lossM / AVG_GRADE;  // distance spent descending
+
+  // If uphill + downhill > total distance, scale proportionally
+  if (distUp + distDown > D) {
+    const scale = D / (distUp + distDown);
+    distUp   *= scale;
+    distDown *= scale;
+  }
+  const distFlat = Math.max(0, D - distUp - distDown);
+
+  const vUp   = solveForSpeedMs(watts, data.weightKg, AVG_GRADE);
+  const vFlat = solveForSpeedMs(watts, data.weightKg, 0);
+  const vDown = Math.min(solveForSpeedMs(watts, data.weightKg, -AVG_GRADE), MAX_DOWN_MS);
+
+  // Total time = sum of time for each segment (harmonic, NOT arithmetic mean)
+  const totalTimeSec = (distUp / vUp) + (distFlat / vFlat) + (distDown / vDown);
+  const avgSpeedKmh  = (D / 1000) / (totalTimeSec / 3600);
 
   return {
-    seconds: estimatedSec,
-    displayTime: formatSeconds(estimatedSec),
-    speedKmh,
+    seconds: totalTimeSec,
+    displayTime: formatSeconds(totalTimeSec),
+    speedKmh: avgSpeedKmh,
   };
 }
 
